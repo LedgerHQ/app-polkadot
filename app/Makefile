@@ -72,7 +72,7 @@ $(info COIN  = [$(COIN)])
 ifeq ($(COIN),DOT)
 # Main app configuration
 DEFINES += APP_STANDARD
-ifeq ($(TARGET_NAME),TARGET_NANOX)
+ifneq ($(TARGET_NAME),TARGET_NANOS)
 DEFINES += SUBSTRATE_PARSER_FULL
 endif
 APPNAME = "Polkadot"
@@ -111,6 +111,13 @@ OUTPUT_ELF ?= $(CURDIR)/output/app_x.elf
 OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_x.sh
 endif
 
+ifeq ($(TARGET_NAME),TARGET_NANOS2)
+SCRIPT_LD:=$(CURDIR)/script_s2.ld
+ICONNAME:=$(CURDIR)/nanox_icon.gif
+OUTPUT_ELF ?= $(CURDIR)/output/app_s2.elf
+OUTPUT_INSTALLER:= $(CURDIR)/pkg/installer_s2.sh
+endif
+
 $(info TARGET_NAME  = [$(TARGET_NAME)])
 $(info ICONNAME  = [$(ICONNAME)])
 
@@ -137,7 +144,12 @@ DEFINES       += HAVE_BOLOS_APP_STACK_CANARY
 
 DEFINES       += HAVE_WEBUSB WEBUSB_URL_SIZE_B=0 WEBUSB_URL=""
 
-ifeq ($(TARGET_NAME),TARGET_NANOX)
+ifeq ($(TARGET_NAME),TARGET_NANOS)
+DEFINES       += HAVE_BAGL BAGL_WIDTH=128 BAGL_HEIGHT=32
+DEFINES       += BAGL_WIDTH_MARGIN=10
+DEFINES       += IO_SEPROXYHAL_BUFFER_SIZE_B=128
+else
+# Assume Nano X/S+
 DEFINES       += IO_SEPROXYHAL_BUFFER_SIZE_B=300
 
 DEFINES       += HAVE_GLO096
@@ -148,19 +160,15 @@ DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_EXTRABOLD_11PX
 DEFINES       += HAVE_BAGL_FONT_OPEN_SANS_LIGHT_16PX
 
 DEFINES       += HAVE_UX_FLOW
+endif
 
+ifeq ($(TARGET_NAME),TARGET_NANOX)
+# X specific
 DEFINES       += HAVE_BLE
 DEFINES       += HAVE_BLE_APDU BLE_COMMAND_TIMEOUT_MS=2000
 
 SDK_SOURCE_PATH  += lib_blewbxx lib_blewbxx_impl
-else
-# Assume Nano S
-DEFINES       += HAVE_BAGL BAGL_WIDTH=128 BAGL_HEIGHT=32
-DEFINES       += BAGL_WIDTH_MARGIN=10
-DEFINES       += IO_SEPROXYHAL_BUFFER_SIZE_B=128
 endif
-
-# X specific
 
 # App specific
 
@@ -230,11 +238,11 @@ clean: rust_clean
 # load, delete and listvariants are provided to comply with Ledger requirements
 .PHONY: load
 load:
-	python -m ledgerblue.loadApp $(APP_LOAD_PARAMS)
+	python3 -m ledgerblue.loadApp $(APP_LOAD_PARAMS)
 
 .PHONY: delete
 delete:
-	python -m ledgerblue.deleteApp $(COMMON_DELETE_PARAMS)
+	python3 -m ledgerblue.deleteApp $(COMMON_DELETE_PARAMS)
 
 # Import generic rules from the SDK
 include $(BOLOS_SDK)/Makefile.rules
@@ -246,6 +254,6 @@ dep/%.d: %.c Makefile
 listvariants:
 ifeq ($(TARGET_NAME),TARGET_NANOS)
 	@echo VARIANTS COIN DOT DOT_XL
-else ifeq ($(TARGET_NAME),TARGET_NANOX)
+else
 	@echo VARIANTS COIN DOT
 endif
