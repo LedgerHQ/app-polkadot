@@ -131,7 +131,20 @@ endif
 ############
 # Platform
 
-DEFINES       += PRINTF\(...\)=
+ifndef DEBUG
+	DEBUG = 0
+endif
+
+ifneq ($(DEBUG),0)
+	DEFINES += HAVE_PRINTF
+	ifeq ($(TARGET_NAME),TARGET_NANOS)
+    	DEFINES += PRINTF=screen_printf
+	else
+    	DEFINES += PRINTF=mcu_usb_printf
+    endif
+else
+    DEFINES += PRINTF\(...\)=
+endif
 
 APPVERSION=$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
 DEFINES       += APPVERSION=\"$(APPVERSION)\"
