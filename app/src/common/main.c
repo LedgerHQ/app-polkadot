@@ -19,14 +19,62 @@
 
 #include <os_io_seproxyhal.h>
 
+#include "swap/swap_lib_calls.h"
+
+/* Arguments structure when application is started with libcall. */
+struct libargs_s {
+    unsigned int id;
+    unsigned int command;
+    /* Unused config field */
+    void * chain_config;
+    union {
+        check_address_parameters_t *check_address;
+        create_transaction_parameters_t *create_transaction;
+        get_printable_amount_parameters_t *get_printable_amount;
+    };
+};
+
+/* Private functions prototypes */
+static void app_start(void);
+static void app_exit(void);
+
 __attribute__((section(".boot"))) int
-main(void) {
+main(int arg0) {
     // exit critical section
     __asm volatile("cpsie i");
 
     view_init();
     os_boot();
 
+    if (!arg0) {
+        // called from dashboard as standalone app
+        app_start();
+        return 0;
+    }
+
+    struct libargs_s *args = (struct libargs_s *) arg0;
+    if (args->id != 0x100) {
+        app_exit();
+        return 0;
+    }
+
+    switch (args->command) {
+        // This case would not happen with polkadot ?
+        case RUN_APPLICATION:
+            app_start();
+            break;
+        default:
+            // Called as library
+            // Todo : implement call to swap feature.
+            //library_main(args);
+            break;
+    }
+}
+
+/**
+ * @brief Start the application (when called from dashboard or libcall with RUN_APPLICATION).
+ */
+static void app_start(void) {
     BEGIN_TRY
     {
         TRY
@@ -40,4 +88,18 @@ main(void) {
         {}
     }
     END_TRY;
+}
+
+/**
+ * @brief Exit the application and go back to the dashboard.
+ */
+static void app_exit(void) {
+    BEGIN_TRY_L(exit) {
+        TRY_L(exit) {
+            os_sched_exit(-1);
+        }
+        FINALLY_L(exit) {
+        }
+    }
+    END_TRY_L(exit);
 }
