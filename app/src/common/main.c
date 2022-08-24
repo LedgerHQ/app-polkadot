@@ -21,6 +21,10 @@
 
 #include "swap/swap_lib_calls.h"
 
+#include "swap/handle_swap_sign_transaction.h"
+#include "swap/handle_get_printable_amount.h"
+#include "swap/handle_check_address.h"
+
 /* Arguments structure when application is started with libcall. */
 struct libargs_s {
     unsigned int id;
@@ -37,6 +41,8 @@ struct libargs_s {
 /* Private functions prototypes */
 static void app_start(void);
 static void app_exit(void);
+static void swap_library_main(struct libargs_s *args);
+static void swap_library_main_helper(struct libargs_s *args);
 
 __attribute__((section(".boot"))) int
 main(int arg0) {
@@ -65,8 +71,7 @@ main(int arg0) {
             break;
         default:
             // Called as library
-            // Todo : implement call to swap feature.
-            //library_main(args);
+            swap_library_main(args);
             break;
     }
 }
@@ -102,4 +107,51 @@ static void app_exit(void) {
         }
     }
     END_TRY_L(exit);
+}
+
+static void swap_library_main(struct libargs_s *args) {
+    bool end = false;
+    /* This loop ensures that swap_library_main_helper and os_lib_end are called
+     * within a try context, even if an exception is thrown */
+    while (1) {
+        BEGIN_TRY {
+            TRY {
+                if (!end) {
+                    swap_library_main_helper(args);
+                }
+                os_lib_end();
+            }
+            FINALLY {
+                end = true;
+            }
+        }
+        END_TRY;
+    }
+}
+
+static void swap_library_main_helper(struct libargs_s *args) {
+    check_api_level(CX_COMPAT_APILEVEL);
+    PRINTF("Inside a library \n");
+    switch (args->command) {
+        case CHECK_ADDRESS:
+            // ensure result is zero if an exception is thrown
+            args->check_address->result = 0;
+            args->check_address->result = handle_check_address(args->check_address);
+            break;
+        case SIGN_TRANSACTION:
+            if (copy_transaction_parameters(args->create_transaction)) {
+                // never returns
+                handle_swap_sign_transaction();
+            }
+            break;
+        case GET_PRINTABLE_AMOUNT:
+            // ensure result is zero if an exception is thrown (compatibility breaking, disabled
+            // until LL is ready)
+            //args->get_printable_amount->result = 0;
+            //args->get_printable_amount->result = 
+            handle_get_printable_amount(args->get_printable_amount);
+            break;
+        default:
+            break;
+    }
 }
