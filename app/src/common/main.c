@@ -20,7 +20,7 @@
 #include <os_io_seproxyhal.h>
 
 #include "swap/swap_lib_calls.h"
-
+#include "swap/swap_globals.h"
 #include "swap/handle_swap_sign_transaction.h"
 #include "swap/handle_get_printable_amount.h"
 #include "swap/handle_check_address.h"
@@ -82,6 +82,9 @@ static void app_start(void) {
     {
         TRY
         {
+            G_swap_state.called_from_swap = false;
+            // TODO : figure out what needs to be reset.
+            //reset_transaction_context();
             view_init();
             app_init();
             app_main();
