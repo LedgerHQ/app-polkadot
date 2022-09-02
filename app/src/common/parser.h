@@ -40,6 +40,11 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
                               char *outVal, uint16_t outValLen,
                               uint8_t pageIdx, uint8_t *pageCount);
 
+
+/// Only for swap. Check that a previously parsed TX has the rigth shape/content for the app
+/// to sign it without user approval.
+bool parser_checkSwapConditions(const parser_context_t *ctx);
+
 #ifdef __cplusplus
 }
 #endif

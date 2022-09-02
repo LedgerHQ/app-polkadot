@@ -20,7 +20,9 @@
 #include "app_mode.h"
 #include "parser.h"
 #include "coin.h"
+#include "os.h"
 #include "substrate_dispatch.h"
+#include "swap/swap_globals.h"
 
 #if defined(TARGET_NANOX) || defined(TARGET_NANOS2)
 // For some reason NanoX requires this function
@@ -251,5 +253,65 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
 
 }
 
+bool parser_checkSwapConditions(const parser_context_t *ctx) {
+    // Check method.
+    const char * valid_tx_method = "Balances Transfer";
+    char tmp_str[80];
+    snprintf(tmp_str,sizeof(tmp_str),"%s %s", _getMethod_ModuleName(ctx->tx_obj->transactionVersion,
+                                                ctx->tx_obj->callIndex.moduleIdx),
+                                                _getMethod_Name(ctx->tx_obj->transactionVersion,
+                                                ctx->tx_obj->callIndex.moduleIdx,
+                                                ctx->tx_obj->callIndex.idx));
+    if (strncmp(tmp_str, &valid_tx_method[0], sizeof(valid_tx_method)) != 0) {
+         PRINTF("Wrong swap transaction method (%s, should be : %s).\n",tmp_str,valid_tx_method);
+         return false;
+    }
+
+    // Check transaction method arguments number. Should be 2 (for tx v13). 
+    if(_getMethod_NumItems(ctx->tx_obj->transactionVersion,
+                                                 ctx->tx_obj->callIndex.moduleIdx,
+                                                 ctx->tx_obj->callIndex.idx) != 2)
+    {
+        PRINTF("Wrong transaction method arguments count.\n");
+        return false;
+    }
+
+    // Check destination address.
+    MEMZERO(tmp_str,sizeof(tmp_str));
+    uint8_t pageCount = 0;
+    if(_getMethod_ItemValue(ctx->tx_obj->transactionVersion,
+                            &ctx->tx_obj->method,
+                            ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, 0,
+                            tmp_str, sizeof(tmp_str),
+                            0, &pageCount) != parser_ok)
+    {
+        return false;
+    }
+
+    if (strncmp(tmp_str, &(G_swap_state.destination_address[0]), sizeof(G_swap_state.destination_address)) != 0) {
+         PRINTF("Wrong destination address (%s, should be : %s).\n",tmp_str,G_swap_state.destination_address);
+         return false;
+    }
+    
+    // Check amount.
+    MEMZERO(tmp_str,sizeof(tmp_str));
+    if(_getMethod_ItemValue(ctx->tx_obj->transactionVersion,
+                            &ctx->tx_obj->method,
+                            ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, 1,
+                            tmp_str, sizeof(tmp_str),
+                            0, &pageCount) != parser_ok)
+    {
+        return false;
+    }
+
+    if (strncmp(tmp_str, G_swap_state.amount, sizeof(G_swap_state.amount)) != 0) {
+        PRINTF("Wrong amount (%s, should be : %s).\n",tmp_str,G_swap_state.amount);
+        return false;
+    }
+
+    PRINTF("Swap parameters verified by current tx\n");
+
+    return true;
+}
 
 

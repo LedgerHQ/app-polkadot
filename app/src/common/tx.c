@@ -20,6 +20,7 @@
 #include "parser.h"
 #include <string.h>
 #include "zxmacros.h"
+#include "swap/swap_globals.h"
 
 #if defined(TARGET_NANOX) || defined(TARGET_NANOS2)
 #define RAM_BUFFER_SIZE 8192
@@ -70,8 +71,7 @@ uint8_t *tx_get_buffer() {
     return buffering_get_buffer()->data;
 }
 
-const char *tx_parse() {
-
+const char *tx_parse(bool *swap_tx_ok) {
     uint8_t err = parser_parse(
             &ctx_parsed_tx,
             tx_get_buffer(),
@@ -87,6 +87,12 @@ const char *tx_parse() {
 
     if (err != parser_ok) {
         return parser_getErrorDescription(err);
+    }
+    
+    // If in swap mode, compare swap tx parameters with stored info.
+    if(G_swap_state.called_from_swap)
+    {
+        *swap_tx_ok = parser_checkSwapConditions(&ctx_parsed_tx);
     }
 
     return NULL;
