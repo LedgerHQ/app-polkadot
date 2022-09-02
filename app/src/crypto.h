@@ -38,6 +38,9 @@ extern "C" {
 
 extern uint32_t hdPath[HDPATH_LEN_DEFAULT];
 
+zxerr_t crypto_extractPublicKey(key_kind_e addressKind, const uint32_t path[HDPATH_LEN_DEFAULT],
+                                uint8_t *pubKey, uint16_t pubKeyLen);
+
 uint8_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len,
                                 uint16_t addressType, const uint8_t *pubkey);
 
