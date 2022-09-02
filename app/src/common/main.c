@@ -49,7 +49,6 @@ main(int arg0) {
     // exit critical section
     __asm volatile("cpsie i");
 
-    view_init();
     os_boot();
 
     if (!arg0) {
@@ -63,7 +62,6 @@ main(int arg0) {
         app_exit();
         return 0;
     }
-
     switch (args->command) {
         // This case would not happen with polkadot ?
         case RUN_APPLICATION:
@@ -84,6 +82,7 @@ static void app_start(void) {
     {
         TRY
         {
+            view_init();
             app_init();
             app_main();
         }
@@ -113,6 +112,7 @@ static void swap_library_main(struct libargs_s *args) {
     bool end = false;
     /* This loop ensures that swap_library_main_helper and os_lib_end are called
      * within a try context, even if an exception is thrown */
+
     while (1) {
         BEGIN_TRY {
             TRY {
@@ -131,7 +131,10 @@ static void swap_library_main(struct libargs_s *args) {
 
 static void swap_library_main_helper(struct libargs_s *args) {
     check_api_level(CX_COMPAT_APILEVEL);
-    PRINTF("Inside a library \n");
+    PRINTF("Inside Polkadot library \n");
+    PRINTF("Command received : %d\n",args->command);
+    PRINTF("Id received : %d\n",args->id);
+     
     switch (args->command) {
         case CHECK_ADDRESS:
             // ensure result is zero if an exception is thrown
