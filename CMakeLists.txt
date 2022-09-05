@@ -101,11 +101,6 @@ add_definitions(
     -DLEDGER_MINOR_VERSION=${MINOR_VERSION}
 )
 
-#set(DIR_TO_BSD_LIB_FILE /usr/lib/x86_64-linux-gnu/libbsd.so)
-#add_library(bsdlib SHARED IMPORTED)
-#set_property(TARGET bsdlib PROPERTY IMPORTED_LOCATION "/usr/lib/x86_64-linux-gnu/libbsd.so")
-
-
 ##############################################################
 ##############################################################
 #  static libs
@@ -156,16 +151,11 @@ target_include_directories(unittests PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/app/src/lib
         )
 
-#find_library(BSD_LIB2 NAMES libbsd PATHS "/usr/lib/x86_64-linux-gnu")
-#target_link_libraries(${PROJECT_NAME} )
-
 target_link_libraries(unittests PRIVATE
         gtest_main
         app_lib
         CONAN_PKG::fmt
         CONAN_PKG::jsoncpp)
-        #${DIR_TO_BSD_LIB_FILE})
-        #bsdlib)
 
 add_compile_definitions(TESTVECTORS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/")
 add_test(unittests ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/unittests)
