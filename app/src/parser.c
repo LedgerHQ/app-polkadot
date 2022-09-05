@@ -20,7 +20,7 @@
 #include "app_mode.h"
 #include "parser.h"
 #include "coin.h"
-#include "os.h"
+//#include "os.h"
 #include "substrate_dispatch.h"
 #include "swap/swap_lib_calls.h"
 #include "swap/swap_globals.h"
@@ -264,7 +264,7 @@ bool parser_checkSwapConditions(const parser_context_t *ctx) {
                                                 ctx->tx_obj->callIndex.moduleIdx,
                                                 ctx->tx_obj->callIndex.idx));
     if (strncmp(tmp_str, &valid_tx_method[0], sizeof(valid_tx_method)) != 0) {
-         PRINTF("Wrong swap transaction method (%s, should be : %s).\n",tmp_str,valid_tx_method);
+         //PRINTF("Wrong swap transaction method (%s, should be : %s).\n",tmp_str,valid_tx_method);
          return false;
     }
 
@@ -273,7 +273,7 @@ bool parser_checkSwapConditions(const parser_context_t *ctx) {
                                                  ctx->tx_obj->callIndex.moduleIdx,
                                                  ctx->tx_obj->callIndex.idx) != 2)
     {
-        PRINTF("Wrong transaction method arguments count.\n");
+        //PRINTF("Wrong transaction method arguments count.\n");
         return false;
     }
 
@@ -290,7 +290,7 @@ bool parser_checkSwapConditions(const parser_context_t *ctx) {
     }
 
     if (strncmp(tmp_str, &(G_swap_state.destination_address[0]), sizeof(G_swap_state.destination_address)) != 0) {
-         PRINTF("Wrong destination address (%s, should be : %s).\n",tmp_str,G_swap_state.destination_address);
+         //PRINTF("Wrong destination address (%s, should be : %s).\n",tmp_str,G_swap_state.destination_address);
          return false;
     }
     
@@ -310,11 +310,11 @@ bool parser_checkSwapConditions(const parser_context_t *ctx) {
     bytes_amount_to_print_str(G_swap_state.amount,G_swap_state.amount_length,tmp_amount,sizeof(tmp_amount));
 
     if (strncmp(tmp_str, tmp_amount, sizeof(G_swap_state.amount)) != 0) {
-        PRINTF("Wrong amount (%s, should be : %s).\n",tmp_str,G_swap_state.amount);
+        //PRINTF("Wrong amount (%s, should be : %s).\n",tmp_str,G_swap_state.amount);
         return false;
     }
 
-    PRINTF("Swap parameters verified by current tx\n");
+    //PRINTF("Swap parameters verified by current tx\n");
 
     return true;
 }

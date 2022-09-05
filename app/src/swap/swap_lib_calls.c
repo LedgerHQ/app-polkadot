@@ -1,10 +1,6 @@
-//#include <string.h>
-//#include <stdint.h>
-
+#include <string.h>
 #include <zxmacros.h>
-#include <zxformat.h>
 #include "coin.h"
-
 #include "swap_lib_calls.h"
 
 #define INT128_LENGTH 16 // 128 / 8 = 16 bytes
@@ -35,7 +31,7 @@ static bool uint128_to_decimal(const uint8_t *value, size_t value_len, char *out
             // Not enough space to hold "0" and \0.
             return false;
         }
-        strlcpy(out, "0", out_len);
+        strncat(out, "0", out_len);
         return true;
     }
 

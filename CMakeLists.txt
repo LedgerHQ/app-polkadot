@@ -30,6 +30,7 @@ string(APPEND CMAKE_LINKER_FLAGS " -fno-omit-frame-pointer -g")
 
 add_definitions(-DAPP_STANDARD)
 add_definitions(-DSUBSTRATE_PARSER_FULL)
+add_compile_definitions(PRINTF=)
 
 if(ENABLE_FUZZING)
     add_definitions(-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1)
@@ -100,6 +101,11 @@ add_definitions(
     -DLEDGER_MINOR_VERSION=${MINOR_VERSION}
 )
 
+#set(DIR_TO_BSD_LIB_FILE /usr/lib/x86_64-linux-gnu/libbsd.so)
+#add_library(bsdlib SHARED IMPORTED)
+#set_property(TARGET bsdlib PROPERTY IMPORTED_LOCATION "/usr/lib/x86_64-linux-gnu/libbsd.so")
+
+
 ##############################################################
 ##############################################################
 #  static libs
@@ -113,6 +119,8 @@ file(GLOB_RECURSE LIB_SRC
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/ledger-zxlib/src/zbuffer.c
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/ledger-zxlib/src/zxformat.c
         ####
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/swap/swap_globals.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/swap/swap_lib_calls.c
         ${CMAKE_CURRENT_SOURCE_DIR}/app/src/crypto_helper.c
         ${CMAKE_CURRENT_SOURCE_DIR}/app/src/parser.c
         ${CMAKE_CURRENT_SOURCE_DIR}/app/src/parser_impl_common.c
@@ -123,6 +131,7 @@ file(GLOB_RECURSE LIB_SRC
 
 add_library(app_lib STATIC ${LIB_SRC})
 target_include_directories(app_lib PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/app/src/swap
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/BLAKE2/ref
         ${CMAKE_CURRENT_SOURCE_DIR}/deps/ledger-zxlib/include
         ${CMAKE_CURRENT_SOURCE_DIR}/app/src
@@ -147,11 +156,16 @@ target_include_directories(unittests PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/app/src/lib
         )
 
+#find_library(BSD_LIB2 NAMES libbsd PATHS "/usr/lib/x86_64-linux-gnu")
+#target_link_libraries(${PROJECT_NAME} )
+
 target_link_libraries(unittests PRIVATE
         gtest_main
         app_lib
         CONAN_PKG::fmt
         CONAN_PKG::jsoncpp)
+        #${DIR_TO_BSD_LIB_FILE})
+        #bsdlib)
 
 add_compile_definitions(TESTVECTORS_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/")
 add_test(unittests ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/unittests)
