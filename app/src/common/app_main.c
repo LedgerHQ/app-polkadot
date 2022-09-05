@@ -128,9 +128,7 @@ void app_init() {
     USB_power(0);
     USB_power(1);
     app_mode_reset();
-#ifdef SUPPORT_SR25519
-    zeroize_sr25519_signdata();
-#endif
+
     view_idle_show(0, NULL);
 
 #ifdef HAVE_BLE

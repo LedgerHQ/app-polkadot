@@ -155,11 +155,11 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
 
 #ifdef SUPPORT_SR25519
 __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *tx) {
-    zxerr_t err = app_sign_sr25519();
-    if(err != zxerr_ok){
-        *tx = 0;
-        THROW(APDU_CODE_DATA_INVALID);
-    }
+    //zxerr_t err = app_sign_sr25519();
+    // if(err != zxerr_ok){
+    //     *tx = 0;
+    //     THROW(APDU_CODE_DATA_INVALID);
+    // }
 
     CHECK_APP_CANARY()
 
@@ -179,7 +179,7 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
     {
         if(is_swap_ok)
         {
-            app_return_sr25519();
+            app_sign_sr25519();
         }
         else
         {
@@ -192,7 +192,7 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
     }
     else
     {
-        view_review_init(tx_getItem, tx_getNumItems, app_return_sr25519);
+        view_review_init(tx_getItem, tx_getNumItems, app_sign_sr25519);
         view_review_show(0x03);
         *flags |= IO_ASYNCH_REPLY;
     }
