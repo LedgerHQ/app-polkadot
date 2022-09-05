@@ -22,6 +22,7 @@
 #include "coin.h"
 #include "os.h"
 #include "substrate_dispatch.h"
+#include "swap/swap_lib_calls.h"
 #include "swap/swap_globals.h"
 
 #if defined(TARGET_NANOX) || defined(TARGET_NANOS2)
@@ -304,7 +305,11 @@ bool parser_checkSwapConditions(const parser_context_t *ctx) {
         return false;
     }
 
-    if (strncmp(tmp_str, G_swap_state.amount, sizeof(G_swap_state.amount)) != 0) {
+    char tmp_amount[MAX_PRINTABLE_AMOUNT_SIZE];
+    MEMZERO(tmp_amount,sizeof(tmp_amount));
+    bytes_amount_to_print_str(G_swap_state.amount,G_swap_state.amount_length,tmp_amount,sizeof(tmp_amount));
+
+    if (strncmp(tmp_str, tmp_amount, sizeof(G_swap_state.amount)) != 0) {
         PRINTF("Wrong amount (%s, should be : %s).\n",tmp_str,G_swap_state.amount);
         return false;
     }

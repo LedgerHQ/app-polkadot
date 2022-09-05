@@ -18,12 +18,10 @@ bool copy_transaction_parameters(create_transaction_parameters_t* sign_transacti
     // First copy parameters to stack, and then to global data.
     // We need this "trick" as the input data position can overlap with globals
     char destination_address[50];
-    char amount[MAX_PRINTABLE_AMOUNT_SIZE];
     // TODO : Fees field useless for DOT transaction as it is not included in
     // transaction data ? 
     uint64_t fees;
     MEMZERO(destination_address, sizeof(destination_address));
-    MEMZERO(amount, sizeof(amount));
     MEMZERO(&fees, sizeof(fees));
     strncpy(destination_address,
             sign_transaction_params->destination_address,
@@ -31,22 +29,18 @@ bool copy_transaction_parameters(create_transaction_parameters_t* sign_transacti
 
     // Sanity checks.
     if ((destination_address[sizeof(destination_address) - 1] != '\0') ||
-        (sign_transaction_params->amount_length > 39 )) // Balance type is u128 as per the doc (so max number has 39 digits).
+        (sign_transaction_params->amount_length > 16 )) // Balance type is u128.
     {
         return false;
     }
     
-    // Store amount as printable string
-    bytes_amount_to_print_str((char*)sign_transaction_params->amount,sign_transaction_params->amount_length,amount,sizeof(amount));
-    
     // Copy parameters to globals.
     G_swap_state.fees = read_u64_be((uint8_t*)&fees, 0);
-    memcpy(G_swap_state.amount,
-           amount,
-           sizeof(G_swap_state.amount));
-    memcpy(G_swap_state.destination_address,
-           destination_address,
-           sizeof(G_swap_state.destination_address));
+    G_swap_state.amount_length = sign_transaction_params->amount_length;
+    MEMZERO(G_swap_state.amount,sizeof(G_swap_state.amount));
+    memcpy(G_swap_state.amount,sign_transaction_params->amount,sign_transaction_params->amount_length);
+    memcpy(G_swap_state.destination_address,destination_address,sizeof(G_swap_state.destination_address));
+    
     return true;
 }
 
