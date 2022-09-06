@@ -49,7 +49,6 @@ main(int arg0) {
     // exit critical section
     __asm volatile("cpsie i");
 
-    view_init();
     os_boot();
 
     if (!arg0) {
@@ -84,6 +83,7 @@ static void app_start(void) {
     {
         TRY
         {
+            view_init();
             app_init();
             app_main();
         }
