@@ -253,8 +253,9 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
 
 }
 
-bool parser_checkSwapConditions(const parser_context_t *ctx) {
+parser_error_t parser_checkSwapConditions(const parser_context_t *ctx) {
     // Check method.
+    parser_error_t err = parser_ok;
     const char * valid_tx_method = "Balances Transfer";
     char tmp_str[80];
     snprintf(tmp_str,sizeof(tmp_str),"%s %s", _getMethod_ModuleName(ctx->tx_obj->transactionVersion,
@@ -263,8 +264,8 @@ bool parser_checkSwapConditions(const parser_context_t *ctx) {
                                                 ctx->tx_obj->callIndex.moduleIdx,
                                                 ctx->tx_obj->callIndex.idx));
     if (strncmp(tmp_str, &valid_tx_method[0], sizeof(valid_tx_method)) != 0) {
-         PRINTF("Wrong swap transaction method (%s, should be : %s).\n",tmp_str,valid_tx_method);
-         return false;
+         PRINTF("Wrong swap tx method (%s, should be : %s).\n",tmp_str,valid_tx_method);
+         return parser_swap_tx_wrong_method;
     }
 
     // Check transaction method arguments number. Should be 2 (for tx v13). 
@@ -272,50 +273,55 @@ bool parser_checkSwapConditions(const parser_context_t *ctx) {
                                                  ctx->tx_obj->callIndex.moduleIdx,
                                                  ctx->tx_obj->callIndex.idx) != 2)
     {
-        PRINTF("Wrong transaction method arguments count.\n");
-        return false;
+        PRINTF("Wrong swap tx method arguments count.\n");
+        return parser_swap_tx_wrong_method_args_num;
     }
 
     // Check destination address.
     MEMZERO(tmp_str,sizeof(tmp_str));
     uint8_t pageCount = 0;
-    if(_getMethod_ItemValue(ctx->tx_obj->transactionVersion,
+    err = _getMethod_ItemValue(ctx->tx_obj->transactionVersion,
                             &ctx->tx_obj->method,
                             ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, 0,
                             tmp_str, sizeof(tmp_str),
-                            0, &pageCount) != parser_ok)
+                            0, &pageCount);
+    
+    if(err != parser_ok)
     {
-        return false;
+        PRINTF("Could not parse swap tx destination address.");
+        return err;
     }
 
     if (strncmp(tmp_str, &(G_swap_state.destination_address[0]), sizeof(G_swap_state.destination_address)) != 0) {
-         PRINTF("Wrong destination address (%s, should be : %s).\n",tmp_str,G_swap_state.destination_address);
-         return false;
+         PRINTF("Wrong swap tx destination address (%s, should be : %s).\n",tmp_str,G_swap_state.destination_address);
+         return parser_swap_tx_wrong_dest_addr;
     }
     
     // Check amount.
     MEMZERO(tmp_str,sizeof(tmp_str));
-    if(_getMethod_ItemValue(ctx->tx_obj->transactionVersion,
+    err = _getMethod_ItemValue(ctx->tx_obj->transactionVersion,
                             &ctx->tx_obj->method,
                             ctx->tx_obj->callIndex.moduleIdx, ctx->tx_obj->callIndex.idx, 1,
                             tmp_str, sizeof(tmp_str),
-                            0, &pageCount) != parser_ok)
+                            0, &pageCount);
+    
+    if(err != parser_ok)
     {
-        return false;
+        return err;
     }
 
     char tmp_amount[MAX_PRINTABLE_AMOUNT_SIZE];
     MEMZERO(tmp_amount,sizeof(tmp_amount));
-    bytes_amount_to_print_str((char*)G_swap_state.amount,G_swap_state.amount_length,tmp_amount,sizeof(tmp_amount));
+    bytes_amount_to_print_str((char*)G_swap_state.amount,G_swap_state.amount_length,tmp_amount,sizeof(tmp_amount),true);
 
     if (strncmp(tmp_str, tmp_amount, sizeof(G_swap_state.amount)) != 0) {
-        PRINTF("Wrong amount (%s, should be : %s).\n",tmp_str,G_swap_state.amount);
-        return false;
+        PRINTF("Wrong swap tx amount (%s, should be : %s).\n",tmp_str,tmp_amount);
+        return parser_swap_tx_wrong_amount;
     }
 
     PRINTF("Swap parameters verified by current tx\n");
 
-    return true;
+    return parser_ok;
 }
 
 

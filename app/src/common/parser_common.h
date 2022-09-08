@@ -54,6 +54,11 @@ typedef enum {
     parser_tx_nesting_limit_reached,
     parser_tx_call_vec_too_large,
     parser_junction_limit,
+    // Swap specific
+    parser_swap_tx_wrong_method,
+    parser_swap_tx_wrong_method_args_num,
+    parser_swap_tx_wrong_dest_addr,
+    parser_swap_tx_wrong_amount,
 } parser_error_t;
 
 typedef struct {

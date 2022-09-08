@@ -71,7 +71,7 @@ uint8_t *tx_get_buffer() {
     return buffering_get_buffer()->data;
 }
 
-const char *tx_parse(bool *swap_tx_ok) {
+const char *tx_parse(uint16_t * out_apdu_code) {
     uint8_t err = parser_parse(
             &ctx_parsed_tx,
             tx_get_buffer(),
@@ -79,6 +79,7 @@ const char *tx_parse(bool *swap_tx_ok) {
             &tx_obj);
 
     if (err != parser_ok) {
+        *out_apdu_code =  APDU_CODE_DATA_INVALID;
         return parser_getErrorDescription(err);
     }
 
@@ -86,13 +87,19 @@ const char *tx_parse(bool *swap_tx_ok) {
     CHECK_APP_CANARY()
 
     if (err != parser_ok) {
+        *out_apdu_code = APDU_CODE_DATA_INVALID;
         return parser_getErrorDescription(err);
     }
     
     // If in swap mode, compare swap tx parameters with stored info.
     if(G_swap_state.called_from_swap)
     {
-        *swap_tx_ok = parser_checkSwapConditions(&ctx_parsed_tx);
+        err = parser_checkSwapConditions(&ctx_parsed_tx);
+        CHECK_APP_CANARY()
+        if (err != parser_ok) {
+            *out_apdu_code = APDU_CODE_CONDITIONS_NOT_SATISFIED;
+            return parser_getErrorDescription(err);
+        }
     }
 
     return NULL;

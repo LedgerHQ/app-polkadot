@@ -1,5 +1,6 @@
 #include <string.h>
 #include <zxmacros.h>
+#include <zxformat.h>
 #include "coin.h"
 #include "swap_lib_calls.h"
 
@@ -58,7 +59,7 @@ static bool uint128_to_decimal(const uint8_t *value, size_t value_len, char *out
     return true;
 }
 
-int bytes_amount_to_print_str(char *amount, size_t amount_len, char *out, size_t out_len){
+int bytes_amount_to_print_str(char *amount, size_t amount_len, char *out, size_t out_len, bool trimTrailingZeros){
     
     //Convert byte array (up to 128bits/16bytes) to decimal string
     if (!uint128_to_decimal((uint8_t*)amount, amount_len, out, out_len)) {
@@ -73,6 +74,10 @@ int bytes_amount_to_print_str(char *amount, size_t amount_len, char *out, size_t
     // Add ticker prefix.
     if (z_str3join(out, out_len, COIN_TICKER, "") != zxerr_ok) {
         return 0;
+    }
+
+    if(trimTrailingZeros) {
+        number_inplace_trimming(out, 1);
     }
 
     return 1;

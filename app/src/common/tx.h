@@ -41,10 +41,9 @@ uint8_t *tx_get_buffer();
 
 /// Parse message stored in transaction buffer
 /// This function should be called as soon as full buffer data is loaded.
-/// \param[out] swap_tx_ok Used only for swap transaction. 
-/// Returns true if the tx matches with stored parameters. False otherwise.
+/// \param[out] out_apdu_code APDU return code.
 /// \return It returns NULL if data is valid or error message otherwise.
-const char *tx_parse(bool *swap_tx_ok);
+const char *tx_parse(uint16_t * out_apdu_code);
 
 /// Return the number of items in the transaction
 zxerr_t tx_getNumItems(uint8_t *num_items);

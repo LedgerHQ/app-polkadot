@@ -5,7 +5,7 @@ int handle_get_printable_amount(get_printable_amount_parameters_t* params) {
     MEMZERO(params->printable_amount, sizeof(params->printable_amount));
 
     /* Convert byte array amount to printable amount string.*/
-    if(!bytes_amount_to_print_str((char*)params->amount, params->amount_length, params->printable_amount, sizeof(params->printable_amount)))
+    if(!bytes_amount_to_print_str((char*)params->amount, params->amount_length, params->printable_amount, sizeof(params->printable_amount),true))
     {
         return 0;
     }

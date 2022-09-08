@@ -155,40 +155,19 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
 
 #ifdef SUPPORT_SR25519
 __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *tx) {
-    //zxerr_t err = app_sign_sr25519();
-    // if(err != zxerr_ok){
-    //     *tx = 0;
-    //     THROW(APDU_CODE_DATA_INVALID);
-    // }
-
+    uint16_t parser_apdu_code = APDU_CODE_OK;
+    const char *error_msg = tx_parse(&parser_apdu_code);
     CHECK_APP_CANARY()
-
-    bool is_swap_ok = false;
-    const char *error_msg = tx_parse(&is_swap_ok);
-    
-    CHECK_APP_CANARY()
-
     if (error_msg != NULL) {
         int error_msg_length = strlen(error_msg);
         memcpy(G_io_apdu_buffer, error_msg, error_msg_length);
         *tx += (error_msg_length);
-        THROW(APDU_CODE_DATA_INVALID);
+        THROW(parser_apdu_code);
     }
 
     if(G_swap_state.called_from_swap)
     {
-        if(is_swap_ok)
-        {
-            app_sign_sr25519();
-        }
-        else
-        {
-            // Set error 0x6985 : APDU_CODE_CONDITIONS_NOT_SATISFIED.
-            G_io_apdu_buffer[0] = 0x69;
-            G_io_apdu_buffer[1] = 0x85;
-            // Send back the response, do not restart the event loop.
-            io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
-        }
+        app_sign_sr25519();
     }
     else
     {
@@ -200,31 +179,19 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
 #endif
 
 __Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *tx) {
-    bool is_swap_ok = false;
-    const char *error_msg = tx_parse(&is_swap_ok);
+    uint16_t parser_apdu_code = APDU_CODE_OK;
+    const char *error_msg = tx_parse(&parser_apdu_code);
     CHECK_APP_CANARY()
     if (error_msg != NULL) {
         int error_msg_length = strlen(error_msg);
         memcpy(G_io_apdu_buffer, error_msg, error_msg_length);
         *tx += (error_msg_length);
-        PRINTF("ERROR !!! %s\n",error_msg);
-        THROW(APDU_CODE_DATA_INVALID);
+        THROW(parser_apdu_code);
     }
 
     if(G_swap_state.called_from_swap)
     {
-        if(is_swap_ok)
-        {
-            app_sign_ed25519();
-        }
-        else
-        {
-            // Set error 0x6985 : APDU_CODE_CONDITIONS_NOT_SATISFIED.
-            G_io_apdu_buffer[0] = 0x69;
-            G_io_apdu_buffer[1] = 0x85;
-            // Send back the response, do not restart the event loop.
-            io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, 2);
-        }
+        app_sign_ed25519();
     }
     else
     {
