@@ -2,6 +2,7 @@
 #include "swap_globals.h"
 #include "swap_lib_calls.h"
 #include "app_main.h"
+#include "app_mode.h"
 
 static uint64_t read_u64_be(const uint8_t *ptr, size_t offset) {
     return (uint64_t) ptr[offset + 0] << 56 |  //
@@ -49,6 +50,7 @@ void handle_swap_sign_transaction(void) {
     
     // TODO : check what needs to be reset between calls.
     //reset_transaction_context();
+    app_mode_set_secret(false);
     io_seproxyhal_init();
     UX_INIT();
     USB_power(0);
