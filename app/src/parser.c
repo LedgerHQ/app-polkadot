@@ -263,7 +263,7 @@ parser_error_t parser_checkSwapConditions(const parser_context_t *ctx) {
                                                 _getMethod_Name(ctx->tx_obj->transactionVersion,
                                                 ctx->tx_obj->callIndex.moduleIdx,
                                                 ctx->tx_obj->callIndex.idx));
-    if (strncmp(tmp_str, &valid_tx_method[0], sizeof(valid_tx_method)) != 0) {
+    if (strncmp(tmp_str, &valid_tx_method[0], strlen(valid_tx_method)) != 0) {
          PRINTF("Wrong swap tx method (%s, should be : %s).\n",tmp_str,valid_tx_method);
          return parser_swap_tx_wrong_method;
     }
