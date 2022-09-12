@@ -61,6 +61,7 @@ void handle_swap_sign_transaction(void) {
     G_io_app.plane_mode = os_setting_get(OS_SETTING_PLANEMODE, NULL, 0);
 #endif  // TARGET_NANOX
 #ifdef HAVE_BLE
+    memset(&G_io_asynch_ux_callback, 0, sizeof(G_io_asynch_ux_callback));
     BLE_power(0, NULL);
     BLE_power(1, "Nano X");
 #endif  // HAVE_BLE
