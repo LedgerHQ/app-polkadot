@@ -3,6 +3,7 @@
 #include "swap_lib_calls.h"
 #include "app_main.h"
 #include "app_mode.h"
+#include "view.h"
 
 static uint64_t read_u64_be(const uint8_t *ptr, size_t offset) {
     return (uint64_t) ptr[offset + 0] << 56 |  //
@@ -50,9 +51,9 @@ void handle_swap_sign_transaction(void) {
     
     // TODO : check what needs to be reset between calls.
     //reset_transaction_context();
-    app_mode_set_secret(false);
+    app_mode_reset();
     io_seproxyhal_init();
-    UX_INIT();
+    view_init();
     USB_power(0);
     USB_power(1);
     PRINTF("USB power ON/OFF\n");
@@ -65,6 +66,6 @@ void handle_swap_sign_transaction(void) {
     BLE_power(0, NULL);
     BLE_power(1, "Nano X");
 #endif  // HAVE_BLE
-    PRINTF("[DOT] Calling main app now.\n");
+    PRINTF("Calling main app now.\n");
     app_main();
 }

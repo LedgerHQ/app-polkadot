@@ -131,10 +131,7 @@ endif
 ############
 # Platform
 
-ifndef DEBUG
-	DEBUG = 0
-endif
-
+DEBUG ?= 0
 ifneq ($(DEBUG),0)
 	DEFINES += HAVE_PRINTF
 	ifeq ($(TARGET_NAME),TARGET_NANOS)

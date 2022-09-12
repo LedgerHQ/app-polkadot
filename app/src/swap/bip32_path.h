@@ -1,5 +1,4 @@
-#ifndef _BIT32_PATH_H_
-#define _BIT32_PATH_H_
+#pragma once
 
 #include "stdbool.h"
 
@@ -14,5 +13,3 @@ typedef struct bip32_path {
 bool parse_serialized_path(bip32_path_t* path,
                            unsigned char* serialized_path,
                            unsigned char serialized_path_length);
-
-#endif //_BIT32_PATH_H_

@@ -1,5 +1,4 @@
-#ifndef _SWAP_LIB_CALLS_H_
-#define _SWAP_LIB_CALLS_H_
+#pragma once
 
 #include "stdbool.h"
 #include <zxformat.h>
@@ -55,8 +54,4 @@ typedef struct create_transaction_parameters_s {
     char* destination_address_extra_id;
 } create_transaction_parameters_t;
 
-// TODO : remove unused swap_str_to_u64
-bool swap_str_to_u64(const uint8_t* src, size_t length, uint64_t* result);
 int bytes_amount_to_print_str(char *amount, size_t amount_len, char *out, size_t out_len, bool trimTrailingZeros);
-
-#endif  // _SWAP_LIB_CALLS_H_

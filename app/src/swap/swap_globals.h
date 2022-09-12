@@ -1,5 +1,4 @@
-#ifndef _SWAP_GLOBALS_H_
-#define _SWAP_GLOBALS_H_
+#pragma once
 
 #include <stdint.h>
 #include "swap_lib_calls.h"
@@ -15,5 +14,3 @@ typedef struct swap_globals_s {
 } swap_globals_t;
 
 extern swap_globals_t G_swap_state;
-
-#endif //_SWAP_GLOBALS_H_
