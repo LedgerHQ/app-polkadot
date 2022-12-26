@@ -68,13 +68,6 @@ typedef struct {
     pd_bool_t keep_alive;
 } pd_balances_transfer_all_V15_t;
 
-#define PD_CALL_STAKING_BOND_V15 0
-typedef struct {
-    pd_AccountIdLookupOfT_V15_t controller;
-    pd_CompactBalance_t amount;
-    pd_RewardDestination_V15_t payee;
-} pd_staking_bond_V15_t;
-
 #define PD_CALL_STAKING_BOND_EXTRA_V15 1
 typedef struct {
     pd_CompactBalance_t amount;
@@ -94,11 +87,6 @@ typedef struct {
 typedef struct {
     pd_ValidatorPrefs_V15_t prefs;
 } pd_staking_validate_V15_t;
-
-#define PD_CALL_STAKING_NOMINATE_V15 5
-typedef struct {
-    pd_VecAccountIdLookupOfT_V15_t targets;
-} pd_staking_nominate_V15_t;
 
 #define PD_CALL_STAKING_CHILL_V15 6
 typedef struct {
@@ -382,6 +370,12 @@ typedef struct {
 typedef struct {
     pd_Bytes_t encoded_proposal;
 } pd_democracy_note_imminent_preimage_operational_V15_t;
+
+#define PD_CALL_DEMOCRACY_BLACKLIST_V15 23
+typedef struct {
+    pd_Hash_t proposal_hash;
+    pd_OptionReferendumIndex_V15_t maybe_ref_index;
+} pd_democracy_blacklist_V15_t;
 
 #define PD_CALL_COUNCIL_SET_MEMBERS_V15 0
 typedef struct {
@@ -1216,12 +1210,10 @@ typedef struct {
 
 typedef union {
     pd_balances_transfer_all_V15_t balances_transfer_all_V15;
-    pd_staking_bond_V15_t staking_bond_V15;
     pd_staking_bond_extra_V15_t staking_bond_extra_V15;
     pd_staking_unbond_V15_t staking_unbond_V15;
     pd_staking_withdraw_unbonded_V15_t staking_withdraw_unbonded_V15;
     pd_staking_validate_V15_t staking_validate_V15;
-    pd_staking_nominate_V15_t staking_nominate_V15;
     pd_staking_chill_V15_t staking_chill_V15;
     pd_staking_set_payee_V15_t staking_set_payee_V15;
     pd_staking_set_controller_V15_t staking_set_controller_V15;
@@ -1275,6 +1267,7 @@ typedef union {
     pd_democracy_note_preimage_operational_V15_t democracy_note_preimage_operational_V15;
     pd_democracy_note_imminent_preimage_V15_t democracy_note_imminent_preimage_V15;
     pd_democracy_note_imminent_preimage_operational_V15_t democracy_note_imminent_preimage_operational_V15;
+    pd_democracy_blacklist_V15_t democracy_blacklist_V15;
     pd_council_set_members_V15_t council_set_members_V15;
     pd_council_execute_V15_t council_execute_V15;
     pd_council_propose_V15_t council_propose_V15;
@@ -1445,6 +1438,18 @@ typedef struct {
     pd_CompactBalance_t amount;
 } pd_balances_transfer_keep_alive_V15_t;
 
+#define PD_CALL_STAKING_BOND_V15 0
+typedef struct {
+    pd_AccountIdLookupOfT_V15_t controller;
+    pd_CompactBalance_t amount;
+    pd_RewardDestination_V15_t payee;
+} pd_staking_bond_V15_t;
+
+#define PD_CALL_STAKING_NOMINATE_V15 5
+typedef struct {
+    pd_VecAccountIdLookupOfT_V15_t targets;
+} pd_staking_nominate_V15_t;
+
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
 #endif
@@ -1455,7 +1460,7 @@ typedef struct {
 
 #define PD_CALL_SYSTEM_REMARK_V15 1
 typedef struct {
-    pd_Vecu8_t remark;
+    pd_Bytes_t remark;
 } pd_system_remark_V15_t;
 
 #define PD_CALL_SYSTEM_SET_HEAP_PAGES_V15 2
@@ -1475,7 +1480,7 @@ typedef struct {
 
 #define PD_CALL_SYSTEM_REMARK_WITH_EVENT_V15 8
 typedef struct {
-    pd_Vecu8_t remark;
+    pd_Bytes_t remark;
 } pd_system_remark_with_event_V15_t;
 
 #define PD_CALL_BALANCES_SET_BALANCE_V15 1
@@ -1639,6 +1644,8 @@ typedef union {
     pd_balances_transfer_V15_t balances_transfer_V15;
     pd_balances_force_transfer_V15_t balances_force_transfer_V15;
     pd_balances_transfer_keep_alive_V15_t balances_transfer_keep_alive_V15;
+    pd_staking_bond_V15_t staking_bond_V15;
+    pd_staking_nominate_V15_t staking_nominate_V15;
 #ifdef SUBSTRATE_PARSER_FULL
 #ifndef TARGET_NANOS
 #endif

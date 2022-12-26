@@ -98,6 +98,7 @@ parser_error_t _readOptionAccountId_V15(parser_context_t* c, pd_OptionAccountId_
 parser_error_t _readOptionMultiSignature_V15(parser_context_t* c, pd_OptionMultiSignature_V15_t* v);
 parser_error_t _readOptionMultiSigner_V15(parser_context_t* c, pd_OptionMultiSigner_V15_t* v);
 parser_error_t _readOptionProxyType_V15(parser_context_t* c, pd_OptionProxyType_V15_t* v);
+parser_error_t _readOptionReferendumIndex_V15(parser_context_t* c, pd_OptionReferendumIndex_V15_t* v);
 parser_error_t _readOptionTimepoint_V15(parser_context_t* c, pd_OptionTimepoint_V15_t* v);
 parser_error_t _readOverweightIndex_V15(parser_context_t* c, pd_OverweightIndex_V15_t* v);
 parser_error_t _readParaId_V15(parser_context_t* c, pd_ParaId_V15_t* v);
@@ -627,6 +628,13 @@ parser_error_t _toStringOptionMultiSigner_V15(
 
 parser_error_t _toStringOptionProxyType_V15(
     const pd_OptionProxyType_V15_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount);
+
+parser_error_t _toStringOptionReferendumIndex_V15(
+    const pd_OptionReferendumIndex_V15_t* v,
     char* outValue,
     uint16_t outValueLen,
     uint8_t pageIdx,

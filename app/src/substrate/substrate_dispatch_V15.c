@@ -279,7 +279,7 @@ __Z_INLINE parser_error_t _readMethod_system_fill_block_V15(
 __Z_INLINE parser_error_t _readMethod_system_remark_V15(
     parser_context_t* c, pd_system_remark_V15_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->remark))
+    CHECK_ERROR(_readBytes(c, &m->remark))
     return parser_ok;
 }
 
@@ -307,7 +307,7 @@ __Z_INLINE parser_error_t _readMethod_system_set_code_without_checks_V15(
 __Z_INLINE parser_error_t _readMethod_system_remark_with_event_V15(
     parser_context_t* c, pd_system_remark_with_event_V15_t* m)
 {
-    CHECK_ERROR(_readVecu8(c, &m->remark))
+    CHECK_ERROR(_readBytes(c, &m->remark))
     return parser_ok;
 }
 
@@ -670,6 +670,14 @@ __Z_INLINE parser_error_t _readMethod_democracy_enact_proposal_V15(
 {
     CHECK_ERROR(_readHash(c, &m->proposal_hash))
     CHECK_ERROR(_readReferendumIndex_V15(c, &m->index))
+    return parser_ok;
+}
+
+__Z_INLINE parser_error_t _readMethod_democracy_blacklist_V15(
+    parser_context_t* c, pd_democracy_blacklist_V15_t* m)
+{
+    CHECK_ERROR(_readHash(c, &m->proposal_hash))
+    CHECK_ERROR(_readOptionReferendumIndex_V15(c, &m->maybe_ref_index))
     return parser_ok;
 }
 
@@ -1880,7 +1888,7 @@ parser_error_t _readMethod_V15(
         CHECK_ERROR(_readMethod_balances_transfer_all_V15(c, &method->basic.balances_transfer_all_V15))
         break;
     case 1792: /* module 7 call 0 */
-        CHECK_ERROR(_readMethod_staking_bond_V15(c, &method->basic.staking_bond_V15))
+        CHECK_ERROR(_readMethod_staking_bond_V15(c, &method->nested.staking_bond_V15))
         break;
     case 1793: /* module 7 call 1 */
         CHECK_ERROR(_readMethod_staking_bond_extra_V15(c, &method->basic.staking_bond_extra_V15))
@@ -1895,7 +1903,7 @@ parser_error_t _readMethod_V15(
         CHECK_ERROR(_readMethod_staking_validate_V15(c, &method->basic.staking_validate_V15))
         break;
     case 1797: /* module 7 call 5 */
-        CHECK_ERROR(_readMethod_staking_nominate_V15(c, &method->basic.staking_nominate_V15))
+        CHECK_ERROR(_readMethod_staking_nominate_V15(c, &method->nested.staking_nominate_V15))
         break;
     case 1798: /* module 7 call 6 */
         CHECK_ERROR(_readMethod_staking_chill_V15(c, &method->basic.staking_chill_V15))
@@ -2128,6 +2136,9 @@ parser_error_t _readMethod_V15(
         break;
     case 3606: /* module 14 call 22 */
         CHECK_ERROR(_readMethod_democracy_enact_proposal_V15(c, &method->nested.democracy_enact_proposal_V15))
+        break;
+    case 3607: /* module 14 call 23 */
+        CHECK_ERROR(_readMethod_democracy_blacklist_V15(c, &method->basic.democracy_blacklist_V15))
         break;
     case 3608: /* module 14 call 24 */
         CHECK_ERROR(_readMethod_democracy_cancel_proposal_V15(c, &method->nested.democracy_cancel_proposal_V15))
@@ -2872,6 +2883,8 @@ const char* _getMethod_Name_V15_ParserFull(uint16_t callPrivIdx)
         return STR_ME_REMOVE_OTHER_VOTE;
     case 3606: /* module 14 call 22 */
         return STR_ME_ENACT_PROPOSAL;
+    case 3607: /* module 14 call 23 */
+        return STR_ME_BLACKLIST;
     case 3608: /* module 14 call 24 */
         return STR_ME_CANCEL_PROPOSAL;
     case 3840: /* module 15 call 0 */
@@ -3367,6 +3380,8 @@ uint8_t _getMethod_NumItems_V15(uint8_t moduleIdx, uint8_t callIdx)
     case 3605: /* module 14 call 21 */
         return 2;
     case 3606: /* module 14 call 22 */
+        return 2;
+    case 3607: /* module 14 call 23 */
         return 2;
     case 3608: /* module 14 call 24 */
         return 1;
@@ -4387,6 +4402,15 @@ const char* _getMethod_ItemName_V15(uint8_t moduleIdx, uint8_t callIdx, uint8_t 
             return STR_IT_proposal_hash;
         case 1:
             return STR_IT_index;
+        default:
+            return NULL;
+        }
+    case 3607: /* module 14 call 23 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_proposal_hash;
+        case 1:
+            return STR_IT_maybe_ref_index;
         default:
             return NULL;
         }
@@ -5762,17 +5786,17 @@ parser_error_t _getMethod_ItemValue_V15(
         switch (itemIdx) {
         case 0: /* staking_bond_V15 - controller */;
             return _toStringAccountIdLookupOfT_V15(
-                &m->basic.staking_bond_V15.controller,
+                &m->nested.staking_bond_V15.controller,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 1: /* staking_bond_V15 - amount */;
             return _toStringCompactBalance(
-                &m->basic.staking_bond_V15.amount,
+                &m->nested.staking_bond_V15.amount,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         case 2: /* staking_bond_V15 - payee */;
             return _toStringRewardDestination_V15(
-                &m->basic.staking_bond_V15.payee,
+                &m->nested.staking_bond_V15.payee,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -5822,7 +5846,7 @@ parser_error_t _getMethod_ItemValue_V15(
         switch (itemIdx) {
         case 0: /* staking_nominate_V15 - targets */;
             return _toStringVecAccountIdLookupOfT_V15(
-                &m->basic.staking_nominate_V15.targets,
+                &m->nested.staking_nominate_V15.targets,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -6164,7 +6188,7 @@ parser_error_t _getMethod_ItemValue_V15(
     case 1: /* module 0 call 1 */
         switch (itemIdx) {
         case 0: /* system_remark_V15 - remark */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->nested.system_remark_V15.remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6204,7 +6228,7 @@ parser_error_t _getMethod_ItemValue_V15(
     case 8: /* module 0 call 8 */
         switch (itemIdx) {
         case 0: /* system_remark_with_event_V15 - remark */;
-            return _toStringVecu8(
+            return _toStringBytes(
                 &m->nested.system_remark_with_event_V15.remark,
                 outValue, outValueLen,
                 pageIdx, pageCount);
@@ -6791,6 +6815,21 @@ parser_error_t _getMethod_ItemValue_V15(
         case 1: /* democracy_enact_proposal_V15 - index */;
             return _toStringReferendumIndex_V15(
                 &m->nested.democracy_enact_proposal_V15.index,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    case 3607: /* module 14 call 23 */
+        switch (itemIdx) {
+        case 0: /* democracy_blacklist_V15 - proposal_hash */;
+            return _toStringHash(
+                &m->basic.democracy_blacklist_V15.proposal_hash,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* democracy_blacklist_V15 - maybe_ref_index */;
+            return _toStringOptionReferendumIndex_V15(
+                &m->basic.democracy_blacklist_V15.maybe_ref_index,
                 outValue, outValueLen,
                 pageIdx, pageCount);
         default:
@@ -8927,12 +8966,10 @@ bool _getMethod_IsNestingSupported_V15(uint8_t moduleIdx, uint8_t callIdx)
     case 1028: // Indices:Freeze
     case 1284: // Balances:Transfer all
     case 1285: // Balances:Force unreserve
-    case 1792: // Staking:Bond
     case 1793: // Staking:Bond extra
     case 1794: // Staking:Unbond
     case 1795: // Staking:Withdraw Unbonded
     case 1796: // Staking:Validate
-    case 1797: // Staking:Nominate
     case 1798: // Staking:Chill
     case 1799: // Staking:Set payee
     case 1800: // Staking:Set controller
@@ -8958,6 +8995,7 @@ bool _getMethod_IsNestingSupported_V15(uint8_t moduleIdx, uint8_t callIdx)
     case 3599: // Democracy:Note preimage operational
     case 3600: // Democracy:Note imminent preimage
     case 3601: // Democracy:Note imminent preimage operational
+    case 3607: // Democracy:Blacklist
     case 3840: // Council:Set members
     case 3841: // Council:Execute
     case 3842: // Council:Propose

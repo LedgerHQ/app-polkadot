@@ -414,6 +414,10 @@ typedef struct {
 } pd_ProxyType_V15_t;
 
 typedef struct {
+    uint32_t value;
+} pd_ReferendumIndex_V15_t;
+
+typedef struct {
     pd_BlockNumber_t height;
     uint32_t index;
 } pd_Timepoint_V15_t;
@@ -554,6 +558,10 @@ typedef struct {
 } pd_WeightLimit_V15_t;
 
 typedef struct {
+    uint64_t value;
+} pd_Weight_V15_t;
+
+typedef struct {
     uint32_t value;
 } pd_AccountIndex_V15_t;
 
@@ -593,6 +601,11 @@ typedef struct {
 } pd_OptionProxyType_V15_t;
 
 typedef struct {
+    uint8_t some;
+    pd_ReferendumIndex_V15_t contained;
+} pd_OptionReferendumIndex_V15_t;
+
+typedef struct {
     uint64_t value;
 } pd_OverweightIndex_V15_t;
 
@@ -610,10 +623,6 @@ typedef struct {
 
 typedef struct {
     uint32_t value;
-} pd_ReferendumIndex_V15_t;
-
-typedef struct {
-    uint32_t value;
 } pd_RegistrarIndex_V15_t;
 
 typedef struct {
@@ -625,10 +634,6 @@ typedef struct {
     const uint8_t* _ptr;
     uint64_t _lenBuffer;
 } pd_VecAccountId_V15_t;
-
-typedef struct {
-    uint64_t value;
-} pd_Weight_V15_t;
 
 #ifdef __cplusplus
 }

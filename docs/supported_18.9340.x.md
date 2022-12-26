@@ -1,18 +1,17 @@
-# Polkadot 16.9310.x
+# Polkadot 18.9340.x
 
 ## System
 
 | Name                    | Nano S | Nano S XL          | Nano SP/X          | Nesting            | Arguments                         |
 | ----------------------- | ------ | ------------------ | ------------------ | ------------------ | --------------------------------- |
-| Fill block              |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Perbill`ratio<br/>               |
-| Remark                  |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Vecu8`remark<br/>                |
+| Remark                  |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Bytes`remark<br/>                |
 | Set heap pages          |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `u64`pages<br/>                   |
 | Set code                |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Vecu8`code<br/>                  |
 | Set code without checks |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Vecu8`code<br/>                  |
 | Set storage             |        |                    |                    |                    | `VecKeyValue`items<br/>           |
 | Kill storage            |        |                    |                    |                    | `VecKey`keys<br/>                 |
 | Kill prefix             |        |                    |                    |                    | `Key`prefix<br/>`u32`subkeys<br/> |
-| Remark with event       |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Vecu8`remark<br/>                |
+| Remark with event       |        | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | `Bytes`remark<br/>                |
 
 ## Scheduler
 
@@ -235,6 +234,7 @@
 | Batch all     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `VecCall`calls<br/>                             |
 | Dispatch as   |                    |                    |                    |         | `BoxPalletsOrigin`as_origin<br/>`Call`call<br/> |
 | Force batch   | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         | `VecCall`calls<br/>                             |
+| With weight   |                    | :heavy_check_mark: | :heavy_check_mark: |         | `Call`call<br/>`Weight`weight<br/>              |
 
 ## Identity
 
@@ -345,6 +345,7 @@
 | Pool withdraw unbonded |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`u32`num_slashing_spans<br/>                                                                                                                             |
 | Withdraw Unbonded      |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`member_account<br/>`u32`num_slashing_spans<br/>                                                                                                          |
 | Create                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`state_toggler<br/>                                             |
+| Create with pool id    |        | :heavy_check_mark: | :heavy_check_mark: |         | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`state_toggler<br/>`PoolId`pool_id<br/>                         |
 | Nominate               |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`VecAccountId`validators<br/>                                                                                                                            |
 | Set state              |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`PoolState`state<br/>                                                                                                                                    |
 | Set metadata           |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`Vecu8`metadata<br/>                                                                                                                                     |

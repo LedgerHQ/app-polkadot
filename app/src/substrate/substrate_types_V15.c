@@ -1174,6 +1174,15 @@ parser_error_t _readOptionProxyType_V15(parser_context_t* c, pd_OptionProxyType_
     return parser_ok;
 }
 
+parser_error_t _readOptionReferendumIndex_V15(parser_context_t* c, pd_OptionReferendumIndex_V15_t* v)
+{
+    CHECK_ERROR(_readUInt8(c, &v->some))
+    if (v->some > 0) {
+        CHECK_ERROR(_readReferendumIndex_V15(c, &v->contained))
+    }
+    return parser_ok;
+}
+
 parser_error_t _readOptionTimepoint_V15(parser_context_t* c, pd_OptionTimepoint_V15_t* v)
 {
     CHECK_ERROR(_readUInt8(c, &v->some))
@@ -4135,6 +4144,27 @@ parser_error_t _toStringOptionProxyType_V15(
     *pageCount = 1;
     if (v->some > 0) {
         CHECK_ERROR(_toStringProxyType_V15(
+            &v->contained,
+            outValue, outValueLen,
+            pageIdx, pageCount));
+    } else {
+        snprintf(outValue, outValueLen, "None");
+    }
+    return parser_ok;
+}
+
+parser_error_t _toStringOptionReferendumIndex_V15(
+    const pd_OptionReferendumIndex_V15_t* v,
+    char* outValue,
+    uint16_t outValueLen,
+    uint8_t pageIdx,
+    uint8_t* pageCount)
+{
+    CLEAN_AND_CHECK()
+
+    *pageCount = 1;
+    if (v->some > 0) {
+        CHECK_ERROR(_toStringReferendumIndex_V15(
             &v->contained,
             outValue, outValueLen,
             pageIdx, pageCount));

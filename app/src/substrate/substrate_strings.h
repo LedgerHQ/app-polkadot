@@ -123,6 +123,7 @@ static const char* STR_ME_UNLOCK = "Unlock";
 static const char* STR_ME_REMOVE_VOTE = "Remove vote";
 static const char* STR_ME_REMOVE_OTHER_VOTE = "Remove other vote";
 static const char* STR_ME_ENACT_PROPOSAL = "Enact proposal";
+static const char* STR_ME_BLACKLIST = "Blacklist";
 static const char* STR_ME_CANCEL_PROPOSAL = "Cancel proposal";
 static const char* STR_ME_SET_MEMBERS = "Set members";
 static const char* STR_ME_EXECUTE = "Execute";
@@ -271,8 +272,9 @@ static const char* STR_ME_POKE = "Poke";
 static const char* STR_ME_CONTRIBUTE_ALL = "Contribute all";
 static const char* STR_ME_RESERVE_TRANSFER_ASSETS = "Reserve transfer assets";
 static const char* STR_ME_LIMITED_RESERVE_TRANSFER_ASSETS = "Limited reserve transfer assets";
-static const char* STR_ME_BLACKLIST = "Blacklist";
 static const char* STR_ME_CLOSE_OLD_WEIGHT = "Close old weight";
+static const char* STR_ME_WITH_WEIGHT = "With weight";
+static const char* STR_ME_CREATE_WITH_POOL_ID = "Create with pool id";
 
 // Items names
 static const char* STR_IT_ratio = "Ratio";
@@ -434,6 +436,7 @@ static const char* STR_IT_fee_asset_item = "Fee asset item";
 static const char* STR_IT_location = "Location";
 static const char* STR_IT_xcm_version = "Xcm version";
 static const char* STR_IT_maybe_xcm_version = "Maybe xcm version";
+static const char* STR_IT_weight = "Weight";
 
 #ifdef __cplusplus
 }

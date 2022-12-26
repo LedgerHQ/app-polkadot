@@ -1,4 +1,4 @@
-# Polkadot 16.9310.x
+# Polkadot 17.9330.x
 
 ## System
 
@@ -345,6 +345,7 @@
 | Pool withdraw unbonded |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`u32`num_slashing_spans<br/>                                                                                                                             |
 | Withdraw Unbonded      |        | :heavy_check_mark: | :heavy_check_mark: |         | `AccountIdLookupOfT`member_account<br/>`u32`num_slashing_spans<br/>                                                                                                          |
 | Create                 |        | :heavy_check_mark: | :heavy_check_mark: |         | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`state_toggler<br/>                                             |
+| Create with pool id    |        | :heavy_check_mark: | :heavy_check_mark: |         | `CompactBalance`amount<br/>`AccountIdLookupOfT`root<br/>`AccountIdLookupOfT`nominator<br/>`AccountIdLookupOfT`state_toggler<br/>`PoolId`pool_id<br/>                         |
 | Nominate               |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`VecAccountId`validators<br/>                                                                                                                            |
 | Set state              |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`PoolState`state<br/>                                                                                                                                    |
 | Set metadata           |        | :heavy_check_mark: | :heavy_check_mark: |         | `PoolId`pool_id<br/>`Vecu8`metadata<br/>                                                                                                                                     |
