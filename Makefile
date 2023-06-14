@@ -1,5 +1,5 @@
 #*******************************************************************************
-#*   (c) 2019 Zondax GmbH
+#*   (c) 2019 - 2023 Zondax AG
 #*
 #*  Licensed under the Apache License, Version 2.0 (the "License");
 #*  you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ ifeq ($(BOLOS_SDK),)
 # In this case, there is not predefined SDK and we run dockerized
 # When not using the SDK, we override and build the XL complete app
 
+ZXLIB_COMPILE_STAX ?= 1
 SUBSTRATE_PARSER_FULL ?= 1
 include $(CURDIR)/deps/ledger-zxlib/dockerized_build.mk
 
@@ -46,8 +47,6 @@ zemu_install: tests_tools_build
 
 test_all:
 	make zemu_install
-	# test sr25519
-	make clean_build && SUBSTRATE_PARSER_FULL=1 SUPPORT_SR25519=1 make buildS
-	cd tests_zemu && yarn testSR25519
-	make clean_build && SUBSTRATE_PARSER_FULL=1 make
+	SUBSTRATE_PARSER_FULL=1 make
+	SUBSTRATE_PARSER_FULL=1 SUPPORT_SR25519=1 make buildS
 	make zemu_test

@@ -31,8 +31,8 @@
 #include "zxmacros.h"
 #include "secret.h"
 #include "app_mode.h"
+#include "view.h"
 #include "swap.h"
-#include "view_internal.h"
 
 static bool tx_initialized = false;
 
@@ -105,7 +105,7 @@ __Z_INLINE bool process_chunk(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
     THROW(APDU_CODE_INVALIDP1P2);
 }
 
-__Z_INLINE void handle_getversion(volatile uint32_t *flags, volatile uint32_t *tx) {
+__Z_INLINE void handle_getversion(__Z_UNUSED volatile uint32_t *flags, volatile uint32_t *tx) {
     G_io_apdu_buffer[0] = 0;
 
 #if defined(APP_TESTING)
@@ -168,7 +168,7 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
     CHECK_APP_CANARY()
 
     if (error_msg != NULL) {
-        int error_msg_length = strlen(error_msg);
+        const int error_msg_length = strnlen(error_msg, sizeof(G_io_apdu_buffer));
         memcpy(G_io_apdu_buffer, error_msg, error_msg_length);
         *tx += (error_msg_length);
         THROW(APDU_CODE_DATA_INVALID);
@@ -176,7 +176,10 @@ __Z_INLINE void handleSignSr25519(volatile uint32_t *flags, volatile uint32_t *t
 
     if (G_swap_state.called_from_swap) {
         G_swap_state.should_exit = 1;
-        app_sign_sr25519();
+        err = app_sign_sr25519();
+        if (err != zxerr_ok) {
+            THROW(APDU_CODE_DATA_INVALID);
+        }
         app_return_sr25519();
     } else {
         view_review_init(tx_getItem, tx_getNumItems, app_return_sr25519);
@@ -190,7 +193,7 @@ __Z_INLINE void handleSignEd25519(volatile uint32_t *flags, volatile uint32_t *t
     const char *error_msg = tx_parse();
     CHECK_APP_CANARY()
     if (error_msg != NULL) {
-        int error_msg_length = strlen(error_msg);
+        const int error_msg_length = strnlen(error_msg, sizeof(G_io_apdu_buffer));
         memcpy(G_io_apdu_buffer, error_msg, error_msg_length);
         *tx += (error_msg_length);
         THROW(APDU_CODE_DATA_INVALID);
