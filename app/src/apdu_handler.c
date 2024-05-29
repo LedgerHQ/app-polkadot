@@ -36,7 +36,7 @@
 
 static bool tx_initialized = false;
 
-void extractHDPath(uint32_t rx, uint32_t offset) {
+static void extractHDPath(uint32_t rx, uint32_t offset) {
     tx_initialized = false;
 
     if ((rx - offset) < sizeof(uint32_t) * HDPATH_LEN_DEFAULT) {
@@ -119,7 +119,9 @@ __Z_INLINE void handle_getversion(__Z_UNUSED volatile uint32_t *flags, volatile 
     G_io_apdu_buffer[5] = (LEDGER_PATCH_VERSION >> 8) & 0xFF;
     G_io_apdu_buffer[6] = (LEDGER_PATCH_VERSION >> 0) & 0xFF;
 
-    G_io_apdu_buffer[7] = !IS_UX_ALLOWED;
+    // sdk won't pass the apdu message if device is locked
+    // keeping it for backwards compatibility
+    G_io_apdu_buffer[7] = 0;
 
     G_io_apdu_buffer[8] = (TARGET_ID >> 24) & 0xFF;
     G_io_apdu_buffer[9] = (TARGET_ID >> 16) & 0xFF;
@@ -175,7 +177,6 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
     switch (key_type) {
         case key_ed25519: {
             if (G_swap_state.called_from_swap) {
-                G_swap_state.should_exit = 1;
                 app_sign_ed25519();
             } else {
                 view_review_init(tx_getItem, tx_getNumItems, app_sign_ed25519);
@@ -188,10 +189,10 @@ __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint
         case key_sr25519: {
             zxerr_t err = app_sign_sr25519();
             if (err != zxerr_ok) {
+                *tx = 0;
                 THROW(APDU_CODE_DATA_INVALID);
             }
             if (G_swap_state.called_from_swap) {
-                G_swap_state.should_exit = 1;
                 app_return_sr25519();
             } else {
                 view_review_init(tx_getItem, tx_getNumItems, app_return_sr25519);
@@ -329,6 +330,16 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
         }
         FINALLY
         {
+            #ifdef HAVE_SWAP
+                if (G_swap_state.called_from_swap && G_swap_state.should_exit) {
+                    // Swap checking failed, send reply now and exit, don't wait next cycle
+                    if (sw != 0) {
+                        io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, *tx);
+                    }
+                    // Go back to exchange and report our status
+                    finalize_exchange_sign_transaction(sw == 0);
+                }
+            #endif
         }
     }
     END_TRY;
