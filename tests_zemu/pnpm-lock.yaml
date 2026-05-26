@@ -17,6 +17,9 @@ importers:
       '@zondax/zemu':
         specifier: ^0.67.4
         version: 0.67.4
+      axios:
+        specifier: ^1.16.1
+        version: 1.16.1
       elliptic:
         specifier: ^6.6.1
         version: 6.6.1
