@@ -67,11 +67,18 @@ static parser_error_t printUnsignedItem(ui_field_t *uiFields, PrintItem_t *print
             return parser_error_dummy;
         }
 
+        // unit.len is uint8_t (up to 255); capture it in a bounded local so the
+        // static analyzer can prove the writes below stay within bufUi.
+        const size_t unitLen = printItem->unit.len;
+        if (unitLen + 1 >= sizeof(bufUi)) {
+            return parser_error_dummy;
+        }
+
         // using memmove in the same memory region is safe!
         // we already checked that we have space for it
-        memmove(bufUi + printItem->unit.len + 1, bufUi, strnlen(bufUi, sizeof(bufUi)));
-        memmove(bufUi, printItem->unit.ptr, printItem->unit.len);
-        bufUi[printItem->unit.len] = ' ';
+        memmove(bufUi + unitLen + 1, bufUi, strnlen(bufUi, sizeof(bufUi)));
+        memmove(bufUi, printItem->unit.ptr, unitLen);
+        bufUi[unitLen] = ' ';
     }
 
     const uint16_t numLen = strnlen(bufUi, sizeof(bufUi));
@@ -211,11 +218,18 @@ static parser_error_t printCompactItem(ui_field_t *uiFields, PrintItem_t *printI
             return parser_error_dummy;
         }
 
+        // unit.len is uint8_t (up to 255); capture it in a bounded local so the
+        // static analyzer can prove the writes below stay within bufUi.
+        const size_t unitLen = printItem->unit.len;
+        if (unitLen + 1 >= sizeof(bufUi)) {
+            return parser_error_dummy;
+        }
+
         // using memmove in the same memory region is safe!
         // we already checked that we have space for it
-        memmove(bufUi + printItem->unit.len + 1, bufUi, strnlen(bufUi, sizeof(bufUi)));
-        memmove(bufUi, printItem->unit.ptr, printItem->unit.len);
-        bufUi[printItem->unit.len] = ' ';
+        memmove(bufUi + unitLen + 1, bufUi, strnlen(bufUi, sizeof(bufUi)));
+        memmove(bufUi, printItem->unit.ptr, unitLen);
+        bufUi[unitLen] = ' ';
     }
 
     const uint16_t numLen = strnlen(bufUi, sizeof(bufUi));
