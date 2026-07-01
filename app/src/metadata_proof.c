@@ -92,13 +92,14 @@ static bool isDescendant(uint32_t index, uint32_t leaf) {
     leaf++;
 
     // since leaf > index, log2i(leaf) >= log2i(index)
-    // at max this is 30, the error is a false positive here
+    // levelDiff is at most 30 in practice; guard the shift explicitly so the
+    // static analyzer can prove it never reaches the uint32_t bit width (UB).
     const uint8_t levelDiff = log2i(leaf) - log2i(index);
+    if (levelDiff >= 32) {
+        return false;
+    }
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wshift-count-overflow"
     return index == (leaf >> levelDiff);
-#pragma GCC diagnostic pop
 }
 
 /**

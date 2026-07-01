@@ -53,6 +53,19 @@ export const TEST_TRANSACTIONS = [
   }
 ]
 
+// Live-API vector for the metadata-shortener integration test (Transactions - API - OK).
+// Uses Polkadot (dot) because rococo was decommissioned and is served by no endpoint.
+// The <rootHash> is spliced in at runtime from the shortener's /node/metadata/hash, and
+// the SDK fetches the shortened metadata from /transaction/metadata for the same chain.
+// This is a balances.forceTransfer (1 DOT) immortal payload; regenerate with
+// tests_integration/gen_dot_vector.js after a Polkadot runtime (spec/tx version) bump.
+export const TEST_TRANSACTIONS_API = [
+  {
+    name: 'balances_force_transfer_dot',
+    blob: '050200d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d0090b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe220700e40b54020000000138901e001a00000091b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c391b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c301<rootHash>',
+  },
+]
+
 export const TEST_TRANSACTIONS_FAIL = [
   {
     name: 'balances_force_transfer_westend',
