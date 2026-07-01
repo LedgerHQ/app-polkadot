@@ -17,7 +17,9 @@
 import Zemu from '@zondax/zemu'
 import axios from 'axios'
 import { PolkadotGenericApp } from '@zondax/ledger-substrate'
-import { defaultOptions, DOT_SS58_PREFIX, PATH, TEST_TRANSACTIONS, models, TEST_TRANSACTIONS_FAIL, TEST_ISSUES_ED25519, TEST_ISSUES_SECP256K1 } from './common'
+import { defaultOptions, DOT_SS58_PREFIX, PATH, TEST_TRANSACTIONS, TEST_TRANSACTIONS_API, models, TEST_TRANSACTIONS_FAIL, TEST_ISSUES_ED25519, TEST_ISSUES_SECP256K1 } from './common'
+
+const METADATA_SHORTENER = 'https://polkadot-metadata-shortener.api.live.ledger.com'
 
 // @ts-expect-error missing typings
 import ed25519 from 'ed25519-supercop'
@@ -107,14 +109,14 @@ describe.each(TEST_TRANSACTIONS)('Transactions - OK', function (data) {
   })
 })
 
-describe.each(TEST_TRANSACTIONS)('Transactions - API - OK', function (data) {
+describe.each(TEST_TRANSACTIONS_API)('Transactions - API - OK', function (data) {
   test.concurrent.each(models)(`Test: ${data.name}`, async function (m) {
     const sim = new Zemu(m.path)
     try {
       await sim.start({ ...defaultOptions, model: m.name })
-      const app = new PolkadotGenericApp(sim.getTransport(), 'roc', 'https://api.zondax.ch/polkadot/transaction/metadata')
+      const app = new PolkadotGenericApp(sim.getTransport(), 'dot', `${METADATA_SHORTENER}/transaction/metadata`)
 
-      const resp = await axios.post('https://api.zondax.ch/polkadot/node/metadata/hash', { id: 'roc' })
+      const resp = await axios.post(`${METADATA_SHORTENER}/node/metadata/hash`, { id: 'dot' })
       const blob = Buffer.from(data.blob.replace('<rootHash>', resp.data.metadataHash), 'hex')
 
       const { pubKey } = await app.getAddressEd25519(PATH, DOT_SS58_PREFIX)
@@ -147,9 +149,9 @@ describe.each(TEST_TRANSACTIONS)('Transactions - API - OK', function (data) {
     const sim = new Zemu(m.path)
     try {
       await sim.start({ ...defaultOptions, model: m.name })
-      const app = new PolkadotGenericApp(sim.getTransport(), 'roc', 'https://api.zondax.ch/polkadot/transaction/metadata')
+      const app = new PolkadotGenericApp(sim.getTransport(), 'dot', `${METADATA_SHORTENER}/transaction/metadata`)
 
-      const resp = await axios.post('https://api.zondax.ch/polkadot/node/metadata/hash', { id: 'roc' })
+      const resp = await axios.post(`${METADATA_SHORTENER}/node/metadata/hash`, { id: 'dot' })
       const blob = Buffer.from(data.blob.replace('<rootHash>', resp.data.metadataHash), 'hex')
 
       const { pubKey } = await app.getAddressEcdsa(PATH)
