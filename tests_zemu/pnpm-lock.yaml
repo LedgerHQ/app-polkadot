@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@zondax/ledger-js':
-        specifier: ^1.3.1
-        version: 1.3.1
+        specifier: ^1.3.3
+        version: 1.3.3
       '@zondax/ledger-substrate':
-        specifier: ^2.1.2
-        version: 2.1.2
+        specifier: ^2.3.5
+        version: 2.3.5
       '@zondax/zemu':
         specifier: ^0.67.4
         version: 0.67.4
@@ -495,14 +495,20 @@ packages:
   '@ledgerhq/devices@8.14.2':
     resolution: {integrity: sha512-T3pnfrsQEC/eJU0XHIqWI6qww+CL1k3NumR2XGWlMz8lVpoZ9HhcuGoCkMevp+8SWmymgyNIIFue3jlNA5KiMw==}
 
+  '@ledgerhq/devices@8.15.0':
+    resolution: {integrity: sha512-pHrjZzC81ER6BDKjIzTzubLynFzS15CQ7EQeEfrbrSisc3BFLGrnC7+cXdGWK7eTRAkwH7Uw3M2QM/mbjfhwlw==}
+
+  '@ledgerhq/devices@8.15.1':
+    resolution: {integrity: sha512-o4XEHiwPytnZxYUnOC5JoHX5TPDJpeMXPfXjwhsXVJ9LAbahxQWzC37Iuzk8ZY/oC2yDptzqjs/qNP2y9D9vCA==}
+
   '@ledgerhq/devices@8.5.0':
     resolution: {integrity: sha512-zDB6Pdk6NYYbYis8cWoLLkL9k/IvjhC3hkuuz2lhpJ2AxIs3/PDMUKoyK4DpjPtRyKk1W1lwsnpc6J1i87r4/Q==}
 
-  '@ledgerhq/devices@8.8.0':
-    resolution: {integrity: sha512-ZFRAQQaESxIK/8SYrrHyqb7pQjLPO8f62PI6H16SP0/uC9fdZKR8NqOGMvIf7I6K442SkiQATnC/kxUeUTfuHA==}
-
   '@ledgerhq/errors@6.35.0':
     resolution: {integrity: sha512-qk9PbqIvze7NXGogVxNCsz60rNo5FrGj8gKqs7pcyDk+em5L6s70G7cRxR+1HTXdam4WoPfntUq+WX9zQUynkg==}
+
+  '@ledgerhq/errors@6.36.0':
+    resolution: {integrity: sha512-o2Q5hNvf2TzAzlH8ORAozppRbzixRPYDfmSQrP7FOcM997OEH7qDleXgp/uMpvRdxR/t3CJCG+n0i+bU/oYMKA==}
 
   '@ledgerhq/hw-transport-http@6.36.2':
     resolution: {integrity: sha512-U5YQoQyL2O0r5fa3YCKDBcElJvwKemtk7zu+dkEnM+5nI2+N596cYTpXmzDfaQIV1TsDHG6tTYCGxN2BYfCoNg==}
@@ -510,17 +516,26 @@ packages:
   '@ledgerhq/hw-transport-node-hid-noevents@6.35.2':
     resolution: {integrity: sha512-TzFSPHJ5Sa0pUuaoYtKWsvvZwfqpkmnEqEl6GXDbwS2Rrc0n6O+GQPRYOyUfed13T1UDAl7GPXIryAnHfttQog==}
 
+  '@ledgerhq/hw-transport-node-hid-noevents@6.35.4':
+    resolution: {integrity: sha512-187670Uuuek9ECcT92NQm1PnDfFHT6gBmaJinatnueMLV9lk3q4IrpFZqTotr+LhPNub+YdGQFjYJImcXvYWtw==}
+
   '@ledgerhq/hw-transport-node-hid@6.33.2':
     resolution: {integrity: sha512-Vm2SRDN8FjQiT6vxhzd4EH8JeIH+UDT8NgNWU+iUpLuTllhd1sWHYsQ1Cc4MpUo7wSymqWlXaV3UsJKtYfRzRg==}
 
-  '@ledgerhq/hw-transport@6.31.15':
-    resolution: {integrity: sha512-I+hzH9XGFPaYq9K+iw+qWJUyVdhN9fdO00Df9zAkOCzju1W5Gc+cDJxbYnZApmY8oMd8mNoXTstEW3Ih5ikaVg==}
+  '@ledgerhq/hw-transport-node-hid@6.33.4':
+    resolution: {integrity: sha512-/k0rH+wTpTmUifdxWuOER/dM3vPxW7RQIF0tByGC6noszVC3SGOZVcskBqJZ6xwIs1TvAHvZlEFvZWbnUJMBiw==}
 
   '@ledgerhq/hw-transport@6.31.9':
     resolution: {integrity: sha512-HqB2Whl2qbrzyvs9gC/GmLhIy8RO4CWzjqHS4k0bPWDZRqKa8m6H32vjrbXGO//pUL1Mlu87UwvxvLyuICdjwg==}
 
   '@ledgerhq/hw-transport@6.35.2':
     resolution: {integrity: sha512-eSXFFqMDAB2Ra/5uqmlru0cUyc2XDQPEKf4ITWHeMms2fHhETw9lcgAEl61vszkiz0RLUVB4VQsLJjj7O8kCvg==}
+
+  '@ledgerhq/hw-transport@6.35.3':
+    resolution: {integrity: sha512-FLR4/2mV6srMaic3cr/kweD9RQhpv4+8Q6T6P4PPOyScuz84siH+8NXLgREIeh328W/FxEGG2norjS+tOQW0vA==}
+
+  '@ledgerhq/hw-transport@6.35.4':
+    resolution: {integrity: sha512-FMVxiniQp0pgSIEBX9CjXYBuIAH9BTm3OcrN+/2LqkB8QBeFZdiwmO4BeN9nc2aWspe9z6kxN3SuUyouedNokA==}
 
   '@ledgerhq/logs@6.17.0':
     resolution: {integrity: sha512-yra33g5q/AU7+PwAws+GaVpQGUuxnDREjVBnviJjcaJLVKuLzI4pnj8Bd3nY3fypM5k1yZEYKEXfUuGFUjP2+w==}
@@ -908,8 +923,12 @@ packages:
   '@zondax/ledger-js@1.3.1':
     resolution: {integrity: sha512-sDBwsunK2nSzkqJ5xi6QTiVVpAxSy+X1BVcMfKioBsInjktki2SezT7K8Hw6kSlYd3yfOJlw8cs+hqVtxpAGtg==}
 
-  '@zondax/ledger-substrate@2.1.2':
-    resolution: {integrity: sha512-g+jwyFKXOR+Wg09cRF/SdRAsLsuMFwHDjWA4YZvDjRfwjgMdw+buaAyW9pNmh8Q0qGPFq8Y/ND6IlvlpNp1TIw==}
+  '@zondax/ledger-js@1.3.3':
+    resolution: {integrity: sha512-naWfF5usVF53JDS8y7tTl4DpQep7SHm8JN1/SnS84MSI0Xh6UIUhZf7Js+p/zjiRHcjSt/WpeSwPhFouSI7J9w==}
+    engines: {node: '>=20'}
+
+  '@zondax/ledger-substrate@2.3.5':
+    resolution: {integrity: sha512-hUThBmTXGcrFOjJOZVWL61jqpgmImag7PAZ5zg+ByziHRU2CptoJrJ3v/bYrjTlsA7Jx1ydAUJDo8ajND7YTkQ==}
 
   '@zondax/zemu@0.67.4':
     resolution: {integrity: sha512-Ibu2OzEetPfrRmH3taqFChW8XwpC09lB+lJi2oL69VM8lqNutbAEPE4lrLjDTMhwAIEnyFZ6f2ny9UrxLtRi+w==}
@@ -1021,6 +1040,9 @@ packages:
 
   axios@1.16.1:
     resolution: {integrity: sha512-caYkukvroVPO8KrzuJEb50Hm07KwfBZPEC3VeFHTsqWHvKTsy54hjJz9BS/cdaypROE2rH6xvm9mHX4fgWkr3A==}
+
+  axios@1.18.1:
+    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
 
   babel-jest@30.3.0:
     resolution: {integrity: sha512-gRpauEU2KRrCox5Z296aeVHR4jQ98BCnu0IO332D/xpHNOsIH/bgSRk9k6GbKIbBw8vFeN6ctuu6tV8WOyVfYQ==}
@@ -2478,8 +2500,8 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-is@19.2.6:
-    resolution: {integrity: sha512-XjBR15BhXuylgWGuslhDKqlSayuqvqBX91BP8pauG8kd1zY8kotkNWbXksTCNRarse4kuGbe2kIY05ARtwNIvw==}
+  react-is@19.2.7:
+    resolution: {integrity: sha512-kZFnouyVv7eP/Phmrlo9FK+zcAdriZJvzxXHF1Sl1P377WSGe2G/JxVolhTrB/jeV47lKImhNUsijjHAAbcl/A==}
 
   readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
@@ -3485,6 +3507,20 @@ snapshots:
       rxjs: 7.8.2
       semver: 7.7.3
 
+  '@ledgerhq/devices@8.15.0':
+    dependencies:
+      '@ledgerhq/errors': 6.35.0
+      '@ledgerhq/logs': 6.17.0
+      rxjs: 7.8.2
+      semver: 7.7.3
+
+  '@ledgerhq/devices@8.15.1':
+    dependencies:
+      '@ledgerhq/errors': 6.36.0
+      '@ledgerhq/logs': 6.17.0
+      rxjs: 7.8.2
+      semver: 7.7.3
+
   '@ledgerhq/devices@8.5.0':
     dependencies:
       '@ledgerhq/errors': 6.35.0
@@ -3492,14 +3528,9 @@ snapshots:
       rxjs: 7.8.2
       semver: 7.8.1
 
-  '@ledgerhq/devices@8.8.0':
-    dependencies:
-      '@ledgerhq/errors': 6.35.0
-      '@ledgerhq/logs': 6.17.0
-      rxjs: 7.8.2
-      semver: 7.8.1
-
   '@ledgerhq/errors@6.35.0': {}
+
+  '@ledgerhq/errors@6.36.0': {}
 
   '@ledgerhq/hw-transport-http@6.36.2':
     dependencies:
@@ -3521,6 +3552,15 @@ snapshots:
       '@ledgerhq/logs': 6.17.0
       node-hid: 2.1.2
 
+  '@ledgerhq/hw-transport-node-hid-noevents@6.35.4':
+    dependencies:
+      '@ledgerhq/devices': 8.15.1
+      '@ledgerhq/errors': 6.36.0
+      '@ledgerhq/hw-transport': 6.35.4
+      '@ledgerhq/logs': 6.17.0
+      node-hid: 2.1.2
+    optional: true
+
   '@ledgerhq/hw-transport-node-hid@6.33.2':
     dependencies:
       '@ledgerhq/devices': 8.14.2
@@ -3532,12 +3572,17 @@ snapshots:
       node-hid: 2.1.2
       usb: 2.9.0
 
-  '@ledgerhq/hw-transport@6.31.15':
+  '@ledgerhq/hw-transport-node-hid@6.33.4':
     dependencies:
-      '@ledgerhq/devices': 8.8.0
-      '@ledgerhq/errors': 6.35.0
+      '@ledgerhq/devices': 8.15.1
+      '@ledgerhq/errors': 6.36.0
+      '@ledgerhq/hw-transport': 6.35.4
+      '@ledgerhq/hw-transport-node-hid-noevents': 6.35.4
       '@ledgerhq/logs': 6.17.0
-      events: 3.3.0
+      lodash: 4.18.1
+      node-hid: 2.1.2
+      usb: 2.9.0
+    optional: true
 
   '@ledgerhq/hw-transport@6.31.9':
     dependencies:
@@ -3550,6 +3595,20 @@ snapshots:
     dependencies:
       '@ledgerhq/devices': 8.14.2
       '@ledgerhq/errors': 6.35.0
+      '@ledgerhq/logs': 6.17.0
+      events: 3.3.0
+
+  '@ledgerhq/hw-transport@6.35.3':
+    dependencies:
+      '@ledgerhq/devices': 8.15.0
+      '@ledgerhq/errors': 6.35.0
+      '@ledgerhq/logs': 6.17.0
+      events: 3.3.0
+
+  '@ledgerhq/hw-transport@6.35.4':
+    dependencies:
+      '@ledgerhq/devices': 8.15.1
+      '@ledgerhq/errors': 6.36.0
       '@ledgerhq/logs': 6.17.0
       events: 3.3.0
 
@@ -3927,14 +3986,18 @@ snapshots:
     dependencies:
       '@ledgerhq/hw-transport': 6.31.9
 
-  '@zondax/ledger-substrate@2.1.2':
+  '@zondax/ledger-js@1.3.3':
     dependencies:
-      '@ledgerhq/hw-transport': 6.31.15
+      '@ledgerhq/hw-transport': 6.35.4
+
+  '@zondax/ledger-substrate@2.3.5':
+    dependencies:
+      '@ledgerhq/hw-transport': 6.35.3
       '@zondax/ledger-js': 1.3.1
-      axios: 1.16.1
+      axios: 1.18.1
       buffer: 6.0.3
     optionalDependencies:
-      '@ledgerhq/hw-transport-node-hid': 6.33.2
+      '@ledgerhq/hw-transport-node-hid': 6.33.4
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -4092,6 +4155,16 @@ snapshots:
       - debug
 
   axios@1.16.1:
+    dependencies:
+      follow-redirects: 1.16.0
+      form-data: 4.0.5
+      https-proxy-agent: 5.0.1
+      proxy-from-env: 2.1.0
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  axios@1.18.1:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.5
@@ -5798,7 +5871,7 @@ snapshots:
       '@jest/schemas': 30.4.1
       ansi-styles: 5.2.0
       react-is-18: react-is@18.3.1
-      react-is-19: react-is@19.2.6
+      react-is-19: react-is@19.2.7
 
   protobufjs@7.6.1:
     dependencies:
@@ -5845,7 +5918,7 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-is@19.2.6: {}
+  react-is@19.2.7: {}
 
   readable-stream@3.6.2:
     dependencies:
