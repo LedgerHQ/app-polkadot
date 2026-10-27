@@ -162,11 +162,15 @@ zxerr_t tx_getItem(int8_t displayIdx,
 
     CHECK_ZXERR(tx_getNumItems(&numItems))
 
-    if (displayIdx < 0 || displayIdx >= numItems) {
+    // The view passes a uint8_t item index through this int8_t parameter, so
+    // items 128 and up arrive negative. Read it back as unsigned: rejecting
+    // them ended the Nano review at item 127, and the rest was signed unseen.
+    const uint8_t itemIdx = (uint8_t)displayIdx;
+    if (itemIdx >= numItems) {
         return zxerr_no_data;
     }
 
-    ui_field_t uiFields = {.displayIdx = displayIdx,
+    ui_field_t uiFields = {.displayIdx = itemIdx,
                            .outKey = outKey,
                            .outKeyLen = outKeyLen,
                            .outVal = outVal,
