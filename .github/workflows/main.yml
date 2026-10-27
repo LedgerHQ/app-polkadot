@@ -28,7 +28,7 @@ jobs:
         BOLOS_SDK: /opt/nanosplus-secure-sdk
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
       - name: Install deps
@@ -45,7 +45,7 @@ jobs:
       - name: Update Release
         if: ${{ github.ref == 'refs/heads/main' }}
         id: update_release_nanosp_migration
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -65,7 +65,7 @@ jobs:
         BOLOS_SDK: /opt/stax-secure-sdk
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
       - name: Install deps
@@ -80,7 +80,7 @@ jobs:
       - name: Update Release
         if: ${{ github.ref == 'refs/heads/main' }}
         id: update_release_stax_migration
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -100,7 +100,7 @@ jobs:
         BOLOS_SDK: /opt/flex-secure-sdk
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
       - name: Install deps
@@ -116,7 +116,7 @@ jobs:
       - name: Update Release
         if: ${{ github.ref == 'refs/heads/main' }}
         id: update_release_flex_migration
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -136,7 +136,7 @@ jobs:
         BOLOS_SDK: /opt/apex-secure-sdk
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
       - name: Install deps
@@ -152,7 +152,7 @@ jobs:
       - name: Update Release
         if: ${{ github.ref == 'refs/heads/main' }}
         id: update_release_apex_migration
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
