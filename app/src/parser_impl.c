@@ -131,6 +131,14 @@ parser_error_t transaction_parse(parser_tx_t *txObj) {
                     if (tmpCompact.len != 1 || *tmpCompact.ptr != 0) {
                         hasTip = true;
                     }
+                    // ChargeAssetTxPayment { tip, asset_id: Option<_> }: a Some asset_id has the
+                    // fee paid in that asset, so show it even with no tip (and refuse it in swap)
+                    if (identifier_matches(&tmpExtension.identifier, STR_TIP_WITH_ASSETID)) {
+                        CTX_CHECK_AVAIL(&tmpBlob, 1)
+                        if (tmpBlob.buffer[tmpBlob.offset] != 0) {
+                            hasTip = true;
+                        }
+                    }
                 }
             }
         }
