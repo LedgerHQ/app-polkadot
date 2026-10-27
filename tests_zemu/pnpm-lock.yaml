@@ -15,8 +15,8 @@ importers:
         specifier: ^2.3.5
         version: 2.3.5
       '@zondax/zemu':
-        specifier: ^0.67.4
-        version: 0.67.4
+        specifier: 0.69.0
+        version: 0.69.0
       axios:
         specifier: ^1.16.1
         version: 1.16.1
@@ -501,6 +501,9 @@ packages:
   '@ledgerhq/devices@8.15.1':
     resolution: {integrity: sha512-o4XEHiwPytnZxYUnOC5JoHX5TPDJpeMXPfXjwhsXVJ9LAbahxQWzC37Iuzk8ZY/oC2yDptzqjs/qNP2y9D9vCA==}
 
+  '@ledgerhq/devices@8.16.0':
+    resolution: {integrity: sha512-brXLPzkvGM3D5YNsWQ25P5G4SmWdSNBed9W8wKoOIRLGdRfvE+bg9mzFty0iZ+aRLBkLoXwX7xKIL9zUi6LBKQ==}
+
   '@ledgerhq/devices@8.5.0':
     resolution: {integrity: sha512-zDB6Pdk6NYYbYis8cWoLLkL9k/IvjhC3hkuuz2lhpJ2AxIs3/PDMUKoyK4DpjPtRyKk1W1lwsnpc6J1i87r4/Q==}
 
@@ -510,8 +513,11 @@ packages:
   '@ledgerhq/errors@6.36.0':
     resolution: {integrity: sha512-o2Q5hNvf2TzAzlH8ORAozppRbzixRPYDfmSQrP7FOcM997OEH7qDleXgp/uMpvRdxR/t3CJCG+n0i+bU/oYMKA==}
 
-  '@ledgerhq/hw-transport-http@6.36.2':
-    resolution: {integrity: sha512-U5YQoQyL2O0r5fa3YCKDBcElJvwKemtk7zu+dkEnM+5nI2+N596cYTpXmzDfaQIV1TsDHG6tTYCGxN2BYfCoNg==}
+  '@ledgerhq/errors@6.37.0':
+    resolution: {integrity: sha512-T5yiKI5UX7ugeocdTF3TUsCIN2BH41Bio4ZeN410YFjFOf3es08n/5JyMzzKwzRgP0blG3HfBf7s7vJKqCSAeg==}
+
+  '@ledgerhq/hw-transport-http@6.36.5':
+    resolution: {integrity: sha512-wuinz9sKQRlEdm9sh9jeS6vHvOl8J/Q/i4cfOBv2jRLEE3gmEftflvi3AWNctNyGpNSsiSo2kIGvFr6Rudghkw==}
 
   '@ledgerhq/hw-transport-node-hid-noevents@6.35.2':
     resolution: {integrity: sha512-TzFSPHJ5Sa0pUuaoYtKWsvvZwfqpkmnEqEl6GXDbwS2Rrc0n6O+GQPRYOyUfed13T1UDAl7GPXIryAnHfttQog==}
@@ -536,6 +542,9 @@ packages:
 
   '@ledgerhq/hw-transport@6.35.4':
     resolution: {integrity: sha512-FMVxiniQp0pgSIEBX9CjXYBuIAH9BTm3OcrN+/2LqkB8QBeFZdiwmO4BeN9nc2aWspe9z6kxN3SuUyouedNokA==}
+
+  '@ledgerhq/hw-transport@6.35.5':
+    resolution: {integrity: sha512-P4+wtLewLWgxPtIb90h5kjpzXVlC6f4IBQBmvowVFkInvZt34ffXkX7wa5KfMzu4l3cqCcpNSqtPSCMp+0vuqg==}
 
   '@ledgerhq/logs@6.17.0':
     resolution: {integrity: sha512-yra33g5q/AU7+PwAws+GaVpQGUuxnDREjVBnviJjcaJLVKuLzI4pnj8Bd3nY3fypM5k1yZEYKEXfUuGFUjP2+w==}
@@ -930,8 +939,8 @@ packages:
   '@zondax/ledger-substrate@2.3.5':
     resolution: {integrity: sha512-hUThBmTXGcrFOjJOZVWL61jqpgmImag7PAZ5zg+ByziHRU2CptoJrJ3v/bYrjTlsA7Jx1ydAUJDo8ajND7YTkQ==}
 
-  '@zondax/zemu@0.67.4':
-    resolution: {integrity: sha512-Ibu2OzEetPfrRmH3taqFChW8XwpC09lB+lJi2oL69VM8lqNutbAEPE4lrLjDTMhwAIEnyFZ6f2ny9UrxLtRi+w==}
+  '@zondax/zemu@0.69.0':
+    resolution: {integrity: sha512-bgIMZqlxTaw7E52NrDTV7PHo81jGSys2XOHkhWuosdYsjLWa/LraOUd/fC6UeJyVxtiCANTk0UQj18RwSjaArA==}
     engines: {node: '>=22.0.0'}
 
   acorn-jsx@5.3.2:
@@ -1035,14 +1044,17 @@ packages:
     peerDependencies:
       axios: 0.x || 1.x
 
-  axios@1.13.2:
-    resolution: {integrity: sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==}
+  axios@1.13.5:
+    resolution: {integrity: sha512-cz4ur7Vb0xS4/KUN0tPWe44eqxrIu31me+fbang3ijiNscE129POzipJJA6zniq2C/Z6sJCjMimjS8Lc/GAs8Q==}
 
   axios@1.16.1:
     resolution: {integrity: sha512-caYkukvroVPO8KrzuJEb50Hm07KwfBZPEC3VeFHTsqWHvKTsy54hjJz9BS/cdaypROE2rH6xvm9mHX4fgWkr3A==}
 
   axios@1.18.1:
     resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
+
+  axios@1.20.0:
+    resolution: {integrity: sha512-r8aOh8j9cGKpgQAqpzrUHnSIc6a59Y3Xf/cv8sy1DrHCkZHzQGEuoq1tARk6qSyDdtQGSDgpb9kFlruzPvrgwg==}
 
   babel-jest@30.3.0:
     resolution: {integrity: sha512-gRpauEU2KRrCox5Z296aeVHR4jQ98BCnu0IO332D/xpHNOsIH/bgSRk9k6GbKIbBw8vFeN6ctuu6tV8WOyVfYQ==}
@@ -1627,11 +1639,15 @@ packages:
     resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
     engines: {node: '>= 6'}
 
+  form-data@4.0.6:
+    resolution: {integrity: sha512-vKatAh4SlVfgbv+YtmhiRjhEMJsYpsG1Y2rMQtR+SVSbytsSD1YGzDIcrAJmdFec88u/+VoGmxnl+80gL1tRCQ==}
+    engines: {node: '>= 6'}
+
   fs-constants@1.0.0:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
 
-  fs-extra@11.3.5:
-    resolution: {integrity: sha512-eKpRKAovdpZtR1WopLHxlBWvAgPny3c4gX1G5Jhwmmw4XJj0ifSD5qB5TOo8hmA0wlRKDAOAhEE1yVPgs6Fgcg==}
+  fs-extra@11.4.1:
+    resolution: {integrity: sha512-KYAb4c9BJQI6QqGKthV68OHe0badztdXJWKo0WtBA9IuCFPTKvE5ZdUBglP833aMjhaSPNO4A5j/EkzZtGlKjA==}
     engines: {node: '>=14.14'}
 
   fs.realpath@1.0.0:
@@ -1751,6 +1767,10 @@ packages:
 
   hasown@2.0.3:
     resolution: {integrity: sha512-ej4AhfhfL2Q2zpMmLo7U1Uv9+PyhIZpgQLGT1F9miIGmiCJIoCgSmczFdrc97mWT4kVY72KA+WnnhJ5pghSvSg==}
+    engines: {node: '>= 0.4'}
+
+  hasown@2.0.4:
+    resolution: {integrity: sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==}
     engines: {node: '>= 0.4'}
 
   hmac-drbg@1.0.1:
@@ -3521,6 +3541,10 @@ snapshots:
       rxjs: 7.8.2
       semver: 7.7.3
 
+  '@ledgerhq/devices@8.16.0':
+    dependencies:
+      semver: 7.7.3
+
   '@ledgerhq/devices@8.5.0':
     dependencies:
       '@ledgerhq/errors': 6.35.0
@@ -3532,12 +3556,14 @@ snapshots:
 
   '@ledgerhq/errors@6.36.0': {}
 
-  '@ledgerhq/hw-transport-http@6.36.2':
+  '@ledgerhq/errors@6.37.0': {}
+
+  '@ledgerhq/hw-transport-http@6.36.5':
     dependencies:
-      '@ledgerhq/errors': 6.35.0
-      '@ledgerhq/hw-transport': 6.35.2
+      '@ledgerhq/errors': 6.37.0
+      '@ledgerhq/hw-transport': 6.35.5
       '@ledgerhq/logs': 6.17.0
-      axios: 1.13.2
+      axios: 1.13.5
       ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
@@ -3609,6 +3635,13 @@ snapshots:
     dependencies:
       '@ledgerhq/devices': 8.15.1
       '@ledgerhq/errors': 6.36.0
+      '@ledgerhq/logs': 6.17.0
+      events: 3.3.0
+
+  '@ledgerhq/hw-transport@6.35.5':
+    dependencies:
+      '@ledgerhq/devices': 8.16.0
+      '@ledgerhq/errors': 6.37.0
       '@ledgerhq/logs': 6.17.0
       events: 3.3.0
 
@@ -4002,17 +4035,16 @@ snapshots:
       - debug
       - supports-color
 
-  '@zondax/zemu@0.67.4':
+  '@zondax/zemu@0.69.0':
     dependencies:
       '@grpc/grpc-js': 1.14.4
       '@grpc/proto-loader': 0.8.1
-      '@ledgerhq/errors': 6.35.0
-      '@ledgerhq/hw-transport-http': 6.36.2
-      axios: 1.16.1
-      axios-retry: 4.5.0(axios@1.16.1)
+      '@ledgerhq/hw-transport-http': 6.36.5
+      axios: 1.20.0
+      axios-retry: 4.5.0(axios@1.20.0)
       dockerode: 4.0.12
       elfy: 1.0.0
-      fs-extra: 11.3.5
+      fs-extra: 11.4.1
       get-port: 5.1.1
       pngjs: 7.0.0
       randomstring: 1.3.1
@@ -4141,12 +4173,12 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.1.0
 
-  axios-retry@4.5.0(axios@1.16.1):
+  axios-retry@4.5.0(axios@1.20.0):
     dependencies:
-      axios: 1.16.1
+      axios: 1.20.0
       is-retry-allowed: 2.2.0
 
-  axios@1.13.2:
+  axios@1.13.5:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.5
@@ -4168,6 +4200,16 @@ snapshots:
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.5
+      https-proxy-agent: 5.0.1
+      proxy-from-env: 2.1.0
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  axios@1.20.0:
+    dependencies:
+      follow-redirects: 1.16.0
+      form-data: 4.0.6
       https-proxy-agent: 5.0.1
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
@@ -4850,9 +4892,17 @@ snapshots:
       hasown: 2.0.3
       mime-types: 2.1.35
 
+  form-data@4.0.6:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      es-set-tostringtag: 2.1.0
+      hasown: 2.0.4
+      mime-types: 2.1.35
+
   fs-constants@1.0.0: {}
 
-  fs-extra@11.3.5:
+  fs-extra@11.4.1:
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.2.1
@@ -4980,6 +5030,10 @@ snapshots:
       minimalistic-assert: 1.0.1
 
   hasown@2.0.3:
+    dependencies:
+      function-bind: 1.1.2
+
+  hasown@2.0.4:
     dependencies:
       function-bind: 1.1.2
 
