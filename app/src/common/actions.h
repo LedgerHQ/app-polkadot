@@ -24,10 +24,17 @@
 #include "apdu_codes.h"
 #include "coin.h"
 #include "crypto.h"
+#include "crypto_helper.h"
 #include "tx.h"
 #include "zxerror.h"
 
+// Public key followed by the SS58 or 0x address, NUL padded.
+#define ADDR_RESPONSE_MAX_LEN (PK_LEN_25519 + SS58_ADDRESS_MAX_LEN)
+
 extern uint16_t action_addrResponseLen;
+// The address review reads this copy, not G_io_apdu_buffer: a frame received
+// while the review is on screen lands in G_io_apdu_buffer.
+extern uint8_t action_addrResponse[ADDR_RESPONSE_MAX_LEN];
 extern uint16_t blobLen;
 
 extern bool g_review_pending;
@@ -81,8 +88,14 @@ __Z_INLINE void app_reject() {
 
 __Z_INLINE zxerr_t app_fill_address(const uint16_t ss58prefix, const scheme_type_e address_scheme) {
     // Put data directly in the apdu buffer
-    return crypto_fillAddress(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 2, &action_addrResponseLen, ss58prefix,
-                              address_scheme);
+    MEMZERO(action_addrResponse, sizeof(action_addrResponse));
+    CHECK_ZXERR(
+        crypto_fillAddress(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE - 2, &action_addrResponseLen, ss58prefix, address_scheme))
+    if (action_addrResponseLen >= sizeof(action_addrResponse)) {
+        return zxerr_buffer_too_small;
+    }
+    MEMCPY(action_addrResponse, G_io_apdu_buffer, action_addrResponseLen);
+    return zxerr_ok;
 }
 
 __Z_INLINE void app_reply_error() {
@@ -97,6 +110,7 @@ __Z_INLINE void app_reply_address() {
         app_reply_error();
         return;
     }
+    MEMCPY(G_io_apdu_buffer, action_addrResponse, action_addrResponseLen);
     set_code(G_io_apdu_buffer, action_addrResponseLen, APDU_CODE_OK);
     io_exchange(CHANNEL_APDU | IO_RETURN_AFTER_TX, action_addrResponseLen + 2);
 }

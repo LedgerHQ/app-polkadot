@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 
+#include "actions.h"
 #include "app_mode.h"
 #include "coin.h"
 #include "crypto.h"
@@ -49,16 +50,16 @@ zxerr_t addr_getItem(int8_t displayIdx,
                 char tmp[(SECP256K1_ADDRESS_LEN * 2) + 3] = {0};
                 tmp[0] = '0';
                 tmp[1] = 'x';
-                array_to_hexstr(tmp + 2, sizeof(tmp) - 2, G_io_apdu_buffer + SECP256K1_PK_LEN, SECP256K1_ADDRESS_LEN);
+                array_to_hexstr(tmp + 2, sizeof(tmp) - 2, action_addrResponse + SECP256K1_PK_LEN, SECP256K1_ADDRESS_LEN);
                 pageString(outVal, outValLen, tmp, pageIdx, pageCount);
             } else {
-                pageString(outVal, outValLen, (char *)(G_io_apdu_buffer + PK_LEN_25519), pageIdx, pageCount);
+                pageString(outVal, outValLen, (char *)(action_addrResponse + PK_LEN_25519), pageIdx, pageCount);
             }
             return zxerr_ok;
         case 1: {
             snprintf(outKey, outKeyLen, "Public key");
             const uint16_t pkLen = (scheme == secp256k1) ? SECP256K1_PK_LEN : PK_LEN_25519;
-            pageStringHex(outVal, outValLen, (char *)G_io_apdu_buffer, pkLen, pageIdx, pageCount);
+            pageStringHex(outVal, outValLen, (char *)action_addrResponse, pkLen, pageIdx, pageCount);
             return zxerr_ok;
         }
         case 2: {
