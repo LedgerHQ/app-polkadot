@@ -35,6 +35,42 @@ static const char *const rawBalancePallets[] = {
 
 static const size_t rawBalancePalletsLen = sizeof(rawBalancePallets) / sizeof(rawBalancePallets[0]);
 
+// Fields that use a balance type for a value that is not an amount of the native token.
+// These are shown as plain integers, without the native decimals and symbol.
+typedef struct {
+    const char *typeName;
+    const char *fieldName;
+} raw_balance_field_t;
+
+static const raw_balance_field_t rawBalanceFields[] = {
+    // Bittensor: a price in rao per alpha, or the exchange ratio between two subnets
+    {"TaoBalance", "limit_price"},
+};
+
+static const size_t rawBalanceFieldsLen = sizeof(rawBalanceFields) / sizeof(rawBalanceFields[0]);
+
+static bool optBytesEquals(const OptBytes_t *bytes, const char *str) {
+    const char *s = PIC(str);
+    return bytes->hasBytes && bytes->bytes.len == strlen(s) &&
+           strncmp((const char *)bytes->bytes.ptr, s, bytes->bytes.len) == 0;
+}
+
+/**
+ * @brief Check if a field holds a balance type that should not be formatted as a native amount.
+ *
+ * @param field Pointer to the field, with its name and type name.
+ * @return bool True if the value should be shown as a plain integer.
+ */
+static bool isRawBalanceField(const Field_t *field) {
+    for (size_t i = 0; i < rawBalanceFieldsLen; i++) {
+        if (optBytesEquals(&field->typeName, rawBalanceFields[i].typeName) &&
+            optBytesEquals(&field->name, rawBalanceFields[i].fieldName)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  * @brief Check if the current pallet should skip balance formatting.
  *
@@ -72,13 +108,13 @@ static bool shouldSkipBalanceFormatting(const PrintItem_t *printItem) {
 static parser_error_t checkBalanceEncoding(Field_t *field, PrintItem_t *printItem) {
     // Array of balance type strings
     const char *balanceTypes[] = {"Balance",         "BalanceOf<T>",       "BalanceOf<T, I>", "DepositBalance",
-                                  "ExtendedBalance", "PalletBalanceOf<T>", "T::Balance"};
+                                  "ExtendedBalance", "PalletBalanceOf<T>", "T::Balance",      "TaoBalance"};
 
     if (field == NULL) {
         return parser_error_dummy;
     }
 
-    if (!field->typeName.hasBytes) {
+    if (!field->typeName.hasBytes || isRawBalanceField(field)) {
         return parser_ok;
     }
 

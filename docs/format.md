@@ -50,7 +50,12 @@ DepositBalance
 ExtendedBalance
 PalletBalanceOf<T>
 T::Balance
+TaoBalance
 ```
+
+`TaoBalance` is the native balance type of Bittensor (subtensor). Its `limit_price` fields are shown as plain
+integers, because they hold a price per alpha or an exchange ratio between subnets, not an amount of TAO.
+Fields typed `AlphaBalance` (amounts of a subnet's alpha token) are not formatted either.
 
 By using the appropriate type, the application ensures that amounts are displayed correctly, enhancing the overall usability.
 
