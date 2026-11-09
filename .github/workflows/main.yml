@@ -13,14 +13,14 @@ jobs:
   ledger-build:
     uses: Zondax/_workflows/.github/workflows/_ledger_main.yml@v3
     with:
-      runs-on: ${{ github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
+      runs-on: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
       has-rust: false
       has-nanos: false
       node-version: '22'
 
   build_migration_package_nanosp:
     needs: ledger-build
-    runs-on: ${{ github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
+    runs-on: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
     container:
       image: zondax/ledger-app-builder:latest
       options: --user root
@@ -57,7 +57,7 @@ jobs:
 
   build_migration_package_stax:
     needs: ledger-build
-    runs-on: ${{ github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
+    runs-on: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
     container:
       image: zondax/ledger-app-builder:latest
       options: --user root
@@ -92,7 +92,7 @@ jobs:
 
   build_migration_package_flex:
     needs: ledger-build
-    runs-on: ${{ github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
+    runs-on: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
     container:
       image: zondax/ledger-app-builder:latest
       options: --user root
@@ -128,7 +128,7 @@ jobs:
 
   build_migration_package_apex_p:
     needs: ledger-build
-    runs-on: ${{ github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
+    runs-on: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && github.repository_owner == 'zondax' && 'zondax-runners' || 'ubuntu-latest' }}
     container:
       image: zondax/ledger-app-builder:latest
       options: --user root
