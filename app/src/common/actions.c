@@ -17,3 +17,4 @@
 #include "actions.h"
 
 uint16_t action_addrResponseLen;
+uint8_t action_addrResponse[ADDR_RESPONSE_MAX_LEN];

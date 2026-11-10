@@ -1,4 +1,5 @@
 allowBuilds:
+  "@parcel/watcher": false
   cpu-features: false
   ed25519-supercop: true
   keccak: true
